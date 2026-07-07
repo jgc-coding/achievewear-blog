@@ -1,0 +1,17 @@
+# Build-Ausgaben
+dist/
+.astro/
+
+# Abhängigkeiten
+node_modules/
+
+# Logs
+npm-debug.log*
+
+# Betriebssystem
+.DS_Store
+Thumbs.db
+
+# Umgebungsvariablen (falls später nötig — niemals Secrets committen)
+.env
+.env.*
