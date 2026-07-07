@@ -1,0 +1,282 @@
+# =====================================================================
+# Sveltia-CMS-Konfiguration — der Redaktionsbereich für Lisa
+# Alle Feld-Beschriftungen und Hilfetexte sind deutsch; die wenigen
+# Rahmen-Knöpfe der Oberfläche (Save, Publish …) erklärt
+# docs/anleitung-fuer-lisa.md.
+# =====================================================================
+
+backend:
+  name: github
+  repo: jgc-coding/achievewear-blog
+  branch: main
+  automatic_deployments: true # jedes Speichern veröffentlicht automatisch (Build läuft ~2 Min.)
+
+site_url: https://jgc-coding.github.io/achievewear-blog/
+display_url: https://jgc-coding.github.io/achievewear-blog/
+
+# Zentrale Medien-Bibliothek (Fallback) — die Collections unten nutzen
+# eigene Bilder-Ordner direkt neben den Inhalten.
+media_folder: /src/content/einstellungen/bilder
+public_folder: /src/content/einstellungen/bilder
+
+media_libraries:
+  default:
+    config:
+      slugify_filename: true # Dateinamen ohne Umlaute/Leerzeichen speichern
+      max_file_size: 5242880 # max. 5 MB pro Bild
+
+# Artikel-Adressen: Umlaute werden automatisch umgeschrieben (ä→ae, ß→ss)
+slug:
+  encoding: ascii
+  clean_accents: true
+  sanitize_replacement: '-'
+
+collections:
+  # ===================================================================
+  # Blog-Artikel
+  # ===================================================================
+  - name: blog
+    label: Blog-Artikel
+    label_singular: Blog-Artikel
+    description: Deine Artikel — neu anlegen, bearbeiten oder löschen.
+    folder: src/content/blog
+    create: true
+    delete: true
+    extension: md
+    format: yaml-frontmatter
+    identifier_field: title
+    slug: '{{slug}}'
+    summary: '{{title}}'
+    sortable_fields: [date, title]
+    media_folder: bilder # Bilder landen neben den Artikeln in blog/bilder/
+    public_folder: bilder
+    fields:
+      - name: title
+        label: Titel
+        widget: string
+        hint: Die Überschrift des Artikels.
+      - name: description
+        label: Teaser
+        widget: text
+        hint: >-
+          1–2 Sätze Kurzbeschreibung — erscheint in der Blog-Übersicht,
+          bei Google und im RSS-Feed.
+      - name: date
+        label: Datum
+        widget: datetime
+        time_format: false
+        format: 'YYYY-MM-DD'
+        hint: Erscheinungsdatum des Artikels.
+      - name: updated
+        label: Aktualisiert am
+        widget: datetime
+        time_format: false
+        format: 'YYYY-MM-DD'
+        required: false
+        hint: Nur ausfüllen, wenn du einen älteren Artikel überarbeitet hast.
+      - name: category
+        label: Kategorie
+        widget: select
+        options:
+          - { label: 'Nähen', value: naehen }
+          - { label: 'Lauf-Welt verstehen', value: lauf-welt-verstehen }
+          - { label: 'Geschichten', value: geschichten }
+        hint: Eine der drei Säulen des Blogs.
+      - name: tags
+        label: Schlagwörter
+        widget: list
+        required: false
+        default: []
+        hint: 'Optional: Stichwörter wie „armsleeves" oder „anleitung" — mit Enter bestätigen.'
+      - name: cover
+        label: Titelbild
+        widget: image
+        hint: Erscheint oben im Artikel und auf der Karte in der Blog-Übersicht.
+      - name: coverAlt
+        label: 'Titelbild: Beschreibung (Alt-Text)'
+        widget: string
+        hint: >-
+          Beschreibt kurz, was auf dem Bild zu sehen ist — wichtig für
+          Vorlesesoftware und Google.
+      - name: draft
+        label: Entwurf
+        widget: boolean
+        default: true
+        hint: >-
+          AN = der Artikel erscheint NICHT auf der Website (nur hier sichtbar).
+          Zum Veröffentlichen ausschalten und speichern.
+      - name: signature
+        label: Signatur-Zeile anzeigen
+        widget: boolean
+        default: true
+        hint: 'Zeigt am Artikelende deine Signatur („In deinem Tempo …").'
+      - name: body
+        label: Artikeltext
+        widget: markdown
+        hint: >-
+          Dein Artikel. Bilder kannst du direkt einfügen. YouTube-Video:
+          einfach die YouTube-Adresse in eine eigene Zeile setzen — sie wird
+          automatisch zur datenschutzfreundlichen Video-Box.
+
+  # ===================================================================
+  # Feste Seiten
+  # ===================================================================
+  - name: seiten
+    label: Seiten
+    label_singular: Seite
+    description: Über mich, Newsletter, Impressum und Datenschutz — Texte bearbeiten.
+    folder: src/content/seiten
+    create: false
+    delete: false
+    extension: md
+    format: yaml-frontmatter
+    identifier_field: title
+    summary: '{{title}}'
+    fields:
+      - name: title
+        label: Titel
+        widget: string
+        hint: Überschrift der Seite.
+      - name: description
+        label: Kurzbeschreibung
+        widget: text
+        required: false
+        hint: 'Optional: 1–2 Sätze für Google (nicht sichtbar auf der Seite).'
+      - name: body
+        label: Seiteninhalt
+        widget: markdown
+
+  # ===================================================================
+  # Einstellungen
+  # ===================================================================
+  - name: einstellungen
+    label: Einstellungen
+    description: 'Website, Startseite, Farben und Kategorien anpassen.'
+    editor:
+      preview: false
+    files:
+      # ---------------- Website ----------------
+      - name: site
+        label: Website
+        file: src/content/einstellungen/site.yml
+        fields:
+          - { name: title, label: Blog-Name, widget: string, hint: 'Erscheint im Browser-Tab und überall als Name der Website.' }
+          - { name: tagline, label: Untertitel, widget: string, hint: 'Die kleine Zeile unter dem Logo, z. B. „Nähen & Laufen".' }
+          - { name: logoSerif, label: 'Logo: großes Wort', widget: string, hint: 'Der große Teil des Logos (z. B. „Achieve").' }
+          - { name: logoScript, label: 'Logo: geschwungenes Wort', widget: string, hint: 'Der handschriftliche Teil des Logos (z. B. „wear").' }
+          - { name: description, label: Beschreibung für Google, widget: text, hint: '1–2 Sätze, die deine Website beschreiben (für Suchmaschinen).' }
+          - name: noindex
+            label: Vor Suchmaschinen verstecken
+            widget: boolean
+            hint: >-
+              AN = Google & Co. werden ausgesperrt. Bis zum Launch ANLASSEN —
+              zum Launch gemeinsam ausschalten.
+          - { name: footerText, label: Fußzeilen-Text, widget: string, hint: 'Die Zeile ganz unten. {jahr} wird automatisch zur Jahreszahl.' }
+          - { name: pinterestUrl, label: Pinterest-Adresse, widget: string, required: false, hint: 'Sobald ausgefüllt, erscheint „Pinterest" in der Fußzeile.' }
+          - { name: newsletterUrl, label: Newsletter-Anmeldelink (MailerLite), widget: string, required: false, hint: 'Sobald ausgefüllt, führen die Newsletter-Knöpfe direkt zur Anmeldung.' }
+          - { name: signatureText, label: Signatur-Zeile, widget: string, hint: 'Steht am Ende jedes Artikels (abschaltbar pro Artikel).' }
+          - name: navLeft
+            label: Menü links vom Logo
+            widget: list
+            hint: 'Interne Seiten als Pfad angeben (z. B. /blog), externe als volle Adresse.'
+            fields:
+              - { name: label, label: Beschriftung, widget: string }
+              - { name: url, label: Ziel, widget: string }
+          - name: navRight
+            label: Menü rechts vom Logo
+            widget: list
+            hint: 'Interne Seiten als Pfad angeben (z. B. /newsletter), externe als volle Adresse.'
+            fields:
+              - { name: label, label: Beschriftung, widget: string }
+              - { name: url, label: Ziel, widget: string }
+
+      # ---------------- Startseite ----------------
+      - name: startseite
+        label: Startseite
+        file: src/content/einstellungen/startseite.yml
+        media_folder: bilder
+        public_folder: bilder
+        fields:
+          - name: welcome
+            label: 'Bereich 1: Willkommen'
+            widget: object
+            fields:
+              - { name: headline, label: Überschrift, widget: string }
+              - { name: scriptLine, label: Geschwungene Zeile, widget: string }
+              - { name: text, label: Text, widget: text }
+              - { name: buttonText, label: 'Knopf: Beschriftung', widget: string }
+              - { name: buttonUrl, label: 'Knopf: Ziel', widget: string, hint: 'z. B. /ueber-mich oder /blog' }
+              - { name: image, label: Bild, widget: image }
+              - { name: imageAlt, label: 'Bild: Beschreibung (Alt-Text)', widget: string }
+          - name: about
+            label: 'Bereich 2: Über mich'
+            widget: object
+            fields:
+              - { name: headline, label: Überschrift, widget: string }
+              - { name: scriptLine, label: Geschwungene Zeile, widget: string }
+              - { name: text, label: Text, widget: text }
+              - { name: buttonText, label: 'Knopf: Beschriftung', widget: string }
+              - { name: buttonUrl, label: 'Knopf: Ziel', widget: string }
+              - { name: image, label: Bild, widget: image }
+              - { name: imageAlt, label: 'Bild: Beschreibung (Alt-Text)', widget: string }
+          - name: blogSection
+            label: 'Bereich 3: Aus dem Blog'
+            widget: object
+            fields:
+              - { name: headline, label: Überschrift, widget: string }
+              - { name: scriptLine, label: Geschwungene Zeile, widget: string }
+          - name: quote
+            label: 'Bereich 4: Zitat'
+            widget: object
+            fields:
+              - { name: text, label: Zitat-Text, widget: text }
+              - { name: attribution, label: 'Von wem?', widget: string }
+          - name: newsletter
+            label: 'Bereich 5: Newsletter'
+            widget: object
+            fields:
+              - { name: show, label: Bereich anzeigen, widget: boolean }
+              - { name: headline, label: Überschrift, widget: string }
+              - { name: text, label: Text, widget: text }
+              - { name: buttonText, label: 'Knopf: Beschriftung', widget: string }
+
+      # ---------------- Farben ----------------
+      - name: design
+        label: Farben
+        file: src/content/einstellungen/design.yml
+        fields:
+          - { name: creme, label: Creme (Seiten-Hintergrund), widget: color }
+          - { name: rosaZart, label: Rosa zart (Willkommen & Zitat), widget: color }
+          - { name: mint, label: Mint (Über mich & Newsletter), widget: color }
+          - { name: salbei, label: Salbei (Knöpfe), widget: color }
+          - { name: anthrazit, label: Anthrazit (Textfarbe), widget: color }
+          - { name: salbeiTief, label: Salbei tief (Überschriften), widget: color }
+          - { name: altrose, label: Altrosé (Rahmen & Linien), widget: color }
+          - { name: altroseDunkel, label: Altrosé dunkel (geschwungene Schrift), widget: color }
+          - { name: weiss, label: Weiß (Bilderrahmen), widget: color }
+
+      # ---------------- Kategorien ----------------
+      - name: kategorien
+        label: Kategorien
+        file: src/content/einstellungen/kategorien.yml
+        media_folder: bilder
+        public_folder: bilder
+        fields:
+          - name: kategorien
+            label: Die drei Säulen
+            label_singular: Kategorie
+            widget: list
+            min: 3
+            max: 3
+            fields:
+              - { name: name, label: Name, widget: string }
+              - name: slug
+                label: Technischer Name (nicht ändern!)
+                widget: string
+                hint: >-
+                  Fest mit den Artikeln verdrahtet — bitte nur den sichtbaren
+                  Namen darüber ändern, nicht diesen Wert.
+              - { name: description, label: Beschreibung, widget: text }
+              - { name: color, label: Farbe, widget: color }
+              - { name: image, label: Bild, widget: image }
+              - { name: imageAlt, label: 'Bild: Beschreibung (Alt-Text)', widget: string }

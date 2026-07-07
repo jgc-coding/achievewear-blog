@@ -1,0 +1,77 @@
+# Baut die Website bei jedem Push auf main und veröffentlicht sie auf GitHub Pages.
+# Jedes Speichern im Redaktionsbereich erzeugt einen Push — nach ~2 Minuten ist die
+# Änderung live. Läuft gerade schon ein Build, wird er abgebrochen (nur der letzte zählt).
+name: Build & Deploy
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+env:
+  # Einzige Quelle für URL und Base-Pfad (siehe CLAUDE.md).
+  # Phase 2 (Umzug auf All-Inkl): SITE_URL=https://achievewear.de und BASE_PATH=/
+  SITE_URL: https://jgc-coding.github.io
+  BASE_PATH: /achievewear-blog
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v6
+        with:
+          node-version: 24
+          cache: npm
+      - run: npm ci
+      - run: npm run build
+      - uses: actions/upload-pages-artifact@v5
+        with:
+          path: dist
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v5
+
+  # =====================================================================
+  # Phase 2 — Umzug auf All-Inkl (achievewear.de) per FTP.
+  # Anleitung: docs/hosting-phase2-allinkl.md
+  # Zum Aktivieren: Job einkommentieren, die drei FTP-Secrets im Repo
+  # hinterlegen (Settings → Secrets → Actions), env oben umstellen und
+  # die beiden Pages-Jobs (build/deploy) entfernen oder deaktivieren.
+  # =====================================================================
+  # deploy-allinkl:
+  #   runs-on: ubuntu-latest
+  #   env:
+  #     SITE_URL: https://achievewear.de
+  #     BASE_PATH: /
+  #   steps:
+  #     - uses: actions/checkout@v7
+  #     - uses: actions/setup-node@v6
+  #       with:
+  #         node-version: 24
+  #         cache: npm
+  #     - run: npm ci
+  #     - run: npm run build
+  #     - uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+  #       with:
+  #         server: ${{ secrets.FTP_SERVER }}
+  #         username: ${{ secrets.FTP_USER }}
+  #         password: ${{ secrets.FTP_PASSWORD }}
+  #         local-dir: dist/
+  #         server-dir: /
