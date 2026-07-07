@@ -1,0 +1,364 @@
+/* ============================================================
+   AchieveWear — globales Stylesheet
+   Die Farbwerte kommen als CSS-Variablen aus den Einstellungen
+   (src/content/einstellungen/design.yml — im Redaktionsbereich
+   änderbar). Hier stehen nur Fallbacks für den Notfall.
+   ============================================================ */
+
+:root {
+  --creme: #f7f1ed;
+  --rosa-zart: #efd9d1;
+  --mint: #d8e0d4;
+  --salbei: #8a9a7b;
+  --anthrazit: #3a3a3a;
+  --salbei-tief: #5f6f52;
+  --altrose: #cda698;
+  --altrose-dunkel: #b98a78;
+  --weiss: #ffffff;
+
+  --text-muted: #6f6a64;
+  --schatten-weich: 0 14px 34px rgba(58, 58, 58, 0.12);
+  --font-serif: 'Cormorant Garamond', Georgia, 'Times New Roman', serif;
+  --font-sans: 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --font-script: 'Great Vibes', 'Segoe Script', cursive;
+  --container: 1100px;
+}
+
+/* ---------- Basis ---------- */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  background: var(--creme);
+  color: var(--anthrazit);
+  font-family: var(--font-sans);
+  font-size: 16.5px;
+  line-height: 1.7;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  overflow-x: hidden;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  font-family: var(--font-serif);
+  color: var(--salbei-tief);
+  line-height: 1.15;
+  font-weight: 600;
+  margin: 0 0 0.5em;
+}
+
+p {
+  margin: 0 0 1em;
+}
+
+a {
+  color: var(--salbei-tief);
+}
+
+::selection {
+  background: var(--rosa-zart);
+}
+
+:focus-visible {
+  outline: 2px solid var(--salbei-tief);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
+/* ---------- Bausteine ---------- */
+
+.container {
+  max-width: var(--container);
+  margin-inline: auto;
+  padding-inline: clamp(20px, 4vw, 40px);
+}
+
+.btn {
+  display: inline-block;
+  background: var(--salbei);
+  color: var(--creme);
+  font-family: var(--font-sans);
+  font-size: 12.5px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  text-decoration: none;
+  padding: 13px 28px;
+  border-radius: 3px;
+  border: 1px solid transparent;
+  cursor: pointer;
+  transition: background 0.25s ease, transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.btn:hover {
+  background: var(--salbei-tief);
+  transform: translateY(-1px);
+  box-shadow: 0 8px 18px rgba(95, 111, 82, 0.25);
+}
+
+.btn--outline {
+  background: transparent;
+  color: var(--salbei-tief);
+  border-color: var(--salbei);
+}
+
+.btn--outline:hover {
+  background: var(--salbei);
+  color: var(--creme);
+}
+
+.script {
+  font-family: var(--font-script);
+  color: var(--altrose-dunkel);
+  font-weight: 400;
+}
+
+.mini-linie {
+  display: block;
+  width: 38px;
+  height: 2px;
+  background: var(--altrose);
+}
+
+.skip-link {
+  position: absolute;
+  left: -9999px;
+  top: 0;
+  background: var(--salbei-tief);
+  color: var(--creme);
+  padding: 10px 18px;
+  z-index: 100;
+  text-decoration: none;
+}
+
+.skip-link:focus {
+  left: 12px;
+  top: 12px;
+}
+
+/* ---------- Sanftes Einblenden beim Scrollen ---------- */
+/* Nur aktiv, wenn JavaScript läuft (html.js) — sonst bleibt alles sichtbar. */
+
+html.js .fade-up {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.7s ease, transform 0.7s ease;
+}
+
+html.js .fade-up.sichtbar {
+  opacity: 1;
+  transform: none;
+}
+
+/* ---------- Artikel-Typografie (.prose) ---------- */
+
+.prose {
+  font-size: 17.5px;
+  line-height: 1.8;
+}
+
+.prose > :first-child {
+  margin-top: 0;
+}
+
+.prose h2 {
+  font-size: clamp(27px, 3.4vw, 34px);
+  letter-spacing: 0.05em;
+  margin-top: 1.7em;
+}
+
+.prose h3 {
+  font-size: clamp(22px, 2.6vw, 26px);
+  margin-top: 1.5em;
+}
+
+.prose a {
+  color: var(--salbei-tief);
+  text-decoration-thickness: 1px;
+  text-decoration-color: var(--altrose);
+  text-underline-offset: 3px;
+  transition: color 0.2s ease;
+}
+
+.prose a:hover {
+  color: var(--altrose-dunkel);
+}
+
+.prose blockquote {
+  margin: 1.7em 0;
+  padding: 0.4em 0 0.4em 1.3em;
+  border-left: 3px solid var(--altrose);
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: 1.12em;
+  color: var(--text-muted);
+}
+
+.prose blockquote p:last-child {
+  margin-bottom: 0;
+}
+
+.prose ul,
+.prose ol {
+  padding-left: 1.3em;
+  margin: 0 0 1.2em;
+}
+
+.prose li {
+  margin-bottom: 0.35em;
+}
+
+.prose li::marker {
+  color: var(--altrose-dunkel);
+}
+
+.prose img {
+  border-radius: 4px;
+  box-shadow: var(--schatten-weich);
+  margin-block: 1.6em;
+}
+
+.prose hr {
+  border: 0;
+  height: 2px;
+  width: 64px;
+  background: var(--altrose);
+  margin: 2.4em auto;
+}
+
+.prose code {
+  background: var(--rosa-zart);
+  padding: 0.15em 0.45em;
+  border-radius: 3px;
+  font-size: 0.88em;
+}
+
+.prose table {
+  border-collapse: collapse;
+  width: 100%;
+  margin: 1.5em 0;
+  font-size: 0.94em;
+}
+
+.prose th,
+.prose td {
+  border: 1px solid var(--mint);
+  padding: 8px 12px;
+  text-align: left;
+}
+
+.prose th {
+  background: var(--mint);
+  font-weight: 600;
+}
+
+/* ---------- YouTube-2-Klick-Einbettung ---------- */
+
+.yt-consent {
+  position: relative;
+  aspect-ratio: 16 / 9;
+  margin: 1.8em 0;
+  border-radius: 6px;
+  overflow: hidden;
+  background: linear-gradient(135deg, var(--mint), var(--rosa-zart));
+}
+
+.yt-consent iframe {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border: 0;
+}
+
+.yt-consent-button {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  background: transparent;
+  border: 0;
+  cursor: pointer;
+  font-family: var(--font-sans);
+  color: var(--anthrazit);
+}
+
+.yt-consent-play {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  background: var(--salbei-tief);
+  position: relative;
+  transition: transform 0.2s ease;
+}
+
+.yt-consent-play::after {
+  content: '';
+  position: absolute;
+  left: 55%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  border-left: 18px solid var(--creme);
+  border-top: 11px solid transparent;
+  border-bottom: 11px solid transparent;
+}
+
+.yt-consent-button:hover .yt-consent-play {
+  transform: scale(1.07);
+}
+
+.yt-consent-label {
+  font-size: 15px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+}
+
+.yt-consent-hint {
+  font-size: 12px;
+  color: var(--text-muted);
+  max-width: 36ch;
+  line-height: 1.5;
+  padding-inline: 12px;
+}
+
+/* ---------- Barrierefreiheit / Bewegung reduzieren ---------- */
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    transition: none !important;
+    animation: none !important;
+  }
+
+  html.js .fade-up {
+    opacity: 1;
+    transform: none;
+  }
+}

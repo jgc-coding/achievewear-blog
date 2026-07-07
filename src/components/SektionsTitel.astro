@@ -1,0 +1,63 @@
+---
+// Sektions-Überschrift im Vorlagen-Stil: Serif-Caps mit Zierlinien links/rechts,
+// optional mit handschriftlicher Script-Zeile darunter.
+interface Props {
+  text: string;
+  script?: string;
+  lines?: boolean;
+  align?: 'center' | 'left';
+}
+
+const { text, script, lines = true, align = 'center' } = Astro.props;
+---
+
+<div class={`sektions-titel align-${align}`}>
+  <h2 class:list={['titel', { 'mit-linien': lines }]}>
+    {lines && <span class="linie" aria-hidden="true"></span>}
+    <span class="titel-text">{text}</span>
+    {lines && <span class="linie" aria-hidden="true"></span>}
+  </h2>
+  {script && <p class="script script-zeile">{script}</p>}
+</div>
+
+<style>
+  .sektions-titel {
+    margin-bottom: clamp(28px, 4vw, 44px);
+  }
+
+  .titel {
+    display: flex;
+    align-items: center;
+    gap: clamp(14px, 2.5vw, 26px);
+    justify-content: center;
+    font-size: clamp(28px, 4.2vw, 42px);
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    margin: 0;
+  }
+
+  .align-left .titel {
+    justify-content: flex-start;
+  }
+
+  .titel-text {
+    white-space: pre-line;
+  }
+
+  .linie {
+    height: 2px;
+    background: var(--altrose);
+    flex: 0 0 clamp(30px, 6vw, 78px);
+  }
+
+  .script-zeile {
+    margin: 6px 0 0;
+    font-size: clamp(24px, 3vw, 31px);
+    line-height: 1.25;
+    text-align: center;
+  }
+
+  .align-left .script-zeile {
+    text-align: left;
+  }
+</style>

@@ -1,0 +1,90 @@
+---
+// Grund-Layout aller Seiten: <head> (SEO, noindex-Schalter, Fonts, Farb-Variablen
+// aus den CMS-Einstellungen), Header und Footer.
+import '@fontsource/inter/400.css';
+import '@fontsource/inter/600.css';
+import '@fontsource/cormorant-garamond/500.css';
+import '@fontsource/cormorant-garamond/600.css';
+import '@fontsource/cormorant-garamond/500-italic.css';
+import '@fontsource/great-vibes/400.css';
+import '../styles/global.css';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import { getSiteSettings, getDesign } from '../lib/settings';
+import { withBase } from '../lib/url';
+
+interface Props {
+  title?: string;
+  description?: string;
+  ogImage?: string;
+  ogType?: 'website' | 'article';
+}
+
+const { title, description, ogImage, ogType = 'website' } = Astro.props;
+const site = await getSiteSettings();
+const design = await getDesign();
+
+const fullTitle = title ? `${title} · ${site.title}` : `${site.title} — ${site.tagline}`;
+const metaDescription = description ?? site.description;
+const canonical = Astro.site ? new URL(Astro.url.pathname, Astro.site).href : undefined;
+
+// Farbpalette aus design.yml als CSS-Variablen (Lisa kann sie im CMS ändern)
+const cssVars =
+  `:root{--creme:${design.creme};--rosa-zart:${design.rosaZart};--mint:${design.mint};` +
+  `--salbei:${design.salbei};--anthrazit:${design.anthrazit};--salbei-tief:${design.salbeiTief};` +
+  `--altrose:${design.altrose};--altrose-dunkel:${design.altroseDunkel};--weiss:${design.weiss};}`;
+---
+
+<!doctype html>
+<html lang="de">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{fullTitle}</title>
+    <meta name="description" content={metaDescription} />
+    {site.noindex && <meta name="robots" content="noindex, nofollow" />}
+    {canonical && <link rel="canonical" href={canonical} />}
+    <link rel="icon" type="image/svg+xml" href={withBase('/favicon.svg')} />
+    <link
+      rel="alternate"
+      type="application/rss+xml"
+      title={site.title}
+      href={withBase('/rss.xml')}
+    />
+    <meta property="og:site_name" content={site.title} />
+    <meta property="og:title" content={fullTitle} />
+    <meta property="og:description" content={metaDescription} />
+    <meta property="og:type" content={ogType} />
+    <meta property="og:locale" content="de_DE" />
+    {canonical && <meta property="og:url" content={canonical} />}
+    {ogImage && <meta property="og:image" content={ogImage} />}
+    <style set:html={cssVars}></style>
+    <script is:inline>
+      // Kennzeichnet, dass JavaScript läuft — erst dann werden Einblend-Effekte aktiviert.
+      document.documentElement.classList.add('js');
+    </script>
+  </head>
+  <body>
+    <a class="skip-link" href="#inhalt">Zum Inhalt springen</a>
+    <Header />
+    <main id="inhalt">
+      <slot />
+    </main>
+    <Footer />
+    <script>
+      // Sanftes Einblenden der Sektionen beim Scrollen (respektiert prefers-reduced-motion via CSS).
+      const beobachter = new IntersectionObserver(
+        (eintraege) => {
+          for (const eintrag of eintraege) {
+            if (eintrag.isIntersecting) {
+              eintrag.target.classList.add('sichtbar');
+              beobachter.unobserve(eintrag.target);
+            }
+          }
+        },
+        { threshold: 0.12 }
+      );
+      document.querySelectorAll('.fade-up').forEach((el) => beobachter.observe(el));
+    </script>
+  </body>
+</html>

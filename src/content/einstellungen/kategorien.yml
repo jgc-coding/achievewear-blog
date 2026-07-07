@@ -1,0 +1,25 @@
+kategorien:
+  - name: Nähen
+    slug: naehen
+    description: >-
+      Anleitungen, Schnittmuster und Materialkunde — Nähen für die
+      Laufstrecke, von einfach bis raffiniert.
+    color: '#8A9A7B'
+    image: bilder/kategorie-naehen.svg
+    imageAlt: 'Zarte Illustration: Knöpfe und Stichlinien'
+  - name: Lauf-Welt verstehen
+    slug: lauf-welt-verstehen
+    description: >-
+      Die Lauf-Welt erklärt — für alle, die eine Läuferin oder einen
+      Läufer begleiten und unterstützen möchten.
+    color: '#B98A78'
+    image: bilder/kategorie-lauf-welt.svg
+    imageAlt: 'Zarte Illustration: Laufstrecke mit Start und Ziel'
+  - name: Geschichten
+    slug: geschichten
+    description: >-
+      Persönliche Geschichten von der Strecke — ehrlich, ohne Filter,
+      in meinem Tempo.
+    color: '#5F6F52'
+    image: bilder/kategorie-geschichten.svg
+    imageAlt: 'Zarte Illustration: Weg, der zu einem Herz führt'

@@ -1,0 +1,55 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 1000" role="img" aria-label="Platzhalterbild: Garnrollen neben einer Laufstrecke">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0.6" y2="1">
+      <stop offset="0" stop-color="#F7F1ED"/>
+      <stop offset="1" stop-color="#EFD9D1"/>
+    </linearGradient>
+  </defs>
+  <rect width="800" height="1000" fill="url(#bg)"/>
+  <circle cx="640" cy="210" r="190" fill="#D8E0D4" opacity="0.55"/>
+  <circle cx="150" cy="820" r="150" fill="#FFFFFF" opacity="0.4"/>
+  <!-- Laufstrecke als gestrichelter Weg -->
+  <path d="M 90 930 C 240 820, 160 700, 330 620 C 520 530, 420 400, 600 320 C 700 275, 700 210, 660 160"
+        fill="none" stroke="#B98A78" stroke-width="5" stroke-linecap="round" stroke-dasharray="1 22" opacity="0.9"/>
+  <circle cx="90" cy="930" r="12" fill="#8A9A7B"/>
+  <!-- kleines Ziel-Herz am Ende des Wegs -->
+  <path d="M660 150 C 645 136, 637 126, 637 117 C 637 109, 643 104, 650 104 C 655 104, 659 107, 660 111 C 661 107, 665 104, 670 104 C 677 104, 683 109, 683 117 C 683 126, 675 136, 660 150 Z"
+        fill="#8A9A7B"/>
+  <!-- drei Garnrollen -->
+  <g transform="translate(180 320)">
+    <rect x="-38" y="-70" width="76" height="140" rx="10" fill="#8A9A7B"/>
+    <rect x="-46" y="-84" width="92" height="18" rx="8" fill="#5F6F52"/>
+    <rect x="-46" y="66" width="92" height="18" rx="8" fill="#5F6F52"/>
+    <g stroke="#F7F1ED" stroke-width="3" opacity="0.65">
+      <line x1="-38" y1="-40" x2="38" y2="-32"/>
+      <line x1="-38" y1="-12" x2="38" y2="-4"/>
+      <line x1="-38" y1="16" x2="38" y2="24"/>
+      <line x1="-38" y1="44" x2="38" y2="52"/>
+    </g>
+  </g>
+  <g transform="translate(320 380)">
+    <rect x="-38" y="-70" width="76" height="140" rx="10" fill="#CDA698"/>
+    <rect x="-46" y="-84" width="92" height="18" rx="8" fill="#B98A78"/>
+    <rect x="-46" y="66" width="92" height="18" rx="8" fill="#B98A78"/>
+    <g stroke="#F7F1ED" stroke-width="3" opacity="0.65">
+      <line x1="-38" y1="-40" x2="38" y2="-32"/>
+      <line x1="-38" y1="-12" x2="38" y2="-4"/>
+      <line x1="-38" y1="16" x2="38" y2="24"/>
+      <line x1="-38" y1="44" x2="38" y2="52"/>
+    </g>
+  </g>
+  <g transform="translate(215 560)">
+    <rect x="-38" y="-70" width="76" height="140" rx="10" fill="#D8E0D4"/>
+    <rect x="-46" y="-84" width="92" height="18" rx="8" fill="#8A9A7B"/>
+    <rect x="-46" y="66" width="92" height="18" rx="8" fill="#8A9A7B"/>
+    <g stroke="#5F6F52" stroke-width="3" opacity="0.4">
+      <line x1="-38" y1="-40" x2="38" y2="-32"/>
+      <line x1="-38" y1="-12" x2="38" y2="-4"/>
+      <line x1="-38" y1="16" x2="38" y2="24"/>
+      <line x1="-38" y1="44" x2="38" y2="52"/>
+    </g>
+  </g>
+  <!-- loser Faden von der Garnrolle zur Strecke -->
+  <path d="M 355 320 C 470 260, 430 200, 520 190 C 590 183, 600 220, 655 205"
+        fill="none" stroke="#B98A78" stroke-width="3" opacity="0.6"/>
+</svg>

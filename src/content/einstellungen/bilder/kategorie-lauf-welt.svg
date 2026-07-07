@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 1000" role="img" aria-label="Platzhalterbild Kategorie Lauf-Welt verstehen: Strecke von Start bis Ziel">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0.5" y2="1">
+      <stop offset="0" stop-color="#F7F1ED"/>
+      <stop offset="1" stop-color="#EFD9D1"/>
+    </linearGradient>
+  </defs>
+  <rect width="800" height="1000" fill="url(#bg)"/>
+  <circle cx="170" cy="200" r="140" fill="#D8E0D4" opacity="0.6"/>
+  <circle cx="650" cy="870" r="120" fill="#FFFFFF" opacity="0.5"/>
+  <!-- Strecke -->
+  <path d="M 130 880 C 330 800, 180 640, 380 560 C 590 476, 430 360, 610 270 C 680 235, 700 190, 690 150"
+        fill="none" stroke="#B98A78" stroke-width="6" stroke-linecap="round" stroke-dasharray="1 26" opacity="0.95"/>
+  <!-- Start -->
+  <circle cx="130" cy="880" r="16" fill="#8A9A7B"/>
+  <circle cx="130" cy="880" r="28" fill="none" stroke="#8A9A7B" stroke-width="3" opacity="0.5"/>
+  <!-- Kilometermarken -->
+  <g fill="#5F6F52" opacity="0.75">
+    <circle cx="330" cy="705" r="7"/>
+    <circle cx="380" cy="560" r="7"/>
+    <circle cx="540" cy="420" r="7"/>
+  </g>
+  <!-- Zielfahne -->
+  <g transform="translate(690 150)">
+    <line x1="0" y1="0" x2="0" y2="-110" stroke="#5F6F52" stroke-width="6" stroke-linecap="round"/>
+    <path d="M 0 -110 L 78 -88 L 0 -64 Z" fill="#5F6F52"/>
+    <g fill="#F7F1ED">
+      <rect x="10" y="-104" width="12" height="10"/>
+      <rect x="34" y="-99" width="12" height="10"/>
+      <rect x="22" y="-88" width="12" height="10"/>
+      <rect x="46" y="-84" width="12" height="10"/>
+    </g>
+  </g>
+  <!-- anfeuernde Herzen am Streckenrand -->
+  <path d="M262 792 C 252 783, 247 776, 247 770 C 247 765, 251 761, 256 761 C 259 761, 261 763, 262 766 C 263 763, 265 761, 268 761 C 273 761, 277 765, 277 770 C 277 776, 272 783, 262 792 Z" fill="#CDA698"/>
+  <path d="M478 508 C 468 499, 463 492, 463 486 C 463 481, 467 477, 472 477 C 475 477, 477 479, 478 482 C 479 479, 481 477, 484 477 C 489 477, 493 481, 493 486 C 493 492, 488 499, 478 508 Z" fill="#8A9A7B"/>
+</svg>

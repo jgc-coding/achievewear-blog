@@ -1,0 +1,135 @@
+---
+// Kopfbereich mit dem dreiteiligen Text-Logo (Serif-Caps + Script-Überlagerung + Subline)
+// und der Navigation links/rechts — alles über die Website-Einstellungen im CMS änderbar.
+import { getSiteSettings } from '../lib/settings';
+import { withBase, linkUrl } from '../lib/url';
+
+const site = await getSiteSettings();
+---
+
+<header class="site-header">
+  <div class="container header-grid">
+    <nav class="nav nav-links" aria-label="Hauptnavigation links">
+      {site.navLeft.map((eintrag) => <a href={linkUrl(eintrag.url)}>{eintrag.label}</a>)}
+    </nav>
+    <a class="logo" href={withBase('/')} aria-label={`${site.title} — Startseite`}>
+      <span class="logo-lockup" aria-hidden="true">
+        <span class="logo-serif">{site.logoSerif}</span>
+        <span class="logo-script script">{site.logoScript}</span>
+      </span>
+      <span class="logo-subline" aria-hidden="true">{site.tagline}</span>
+    </a>
+    <nav class="nav nav-rechts" aria-label="Hauptnavigation rechts">
+      {site.navRight.map((eintrag) => <a href={linkUrl(eintrag.url)}>{eintrag.label}</a>)}
+    </nav>
+  </div>
+</header>
+
+<style>
+  .site-header {
+    background: var(--creme);
+    padding: 30px 0 26px;
+  }
+
+  .header-grid {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    align-items: center;
+    gap: clamp(16px, 3vw, 40px);
+  }
+
+  .nav {
+    display: flex;
+    gap: clamp(18px, 3vw, 38px);
+    flex-wrap: wrap;
+  }
+
+  .nav-links {
+    justify-content: flex-end;
+  }
+
+  .nav-rechts {
+    justify-content: flex-start;
+  }
+
+  .nav a {
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    text-decoration: none;
+    color: var(--anthrazit);
+    padding-bottom: 3px;
+    border-bottom: 1px solid transparent;
+    transition: color 0.2s ease, border-color 0.2s ease;
+    white-space: nowrap;
+  }
+
+  .nav a:hover {
+    color: var(--salbei-tief);
+    border-bottom-color: var(--altrose);
+  }
+
+  .logo {
+    text-align: center;
+    text-decoration: none;
+    display: inline-flex;
+    flex-direction: column;
+    align-items: center;
+    justify-self: center;
+  }
+
+  .logo-lockup {
+    position: relative;
+    display: inline-block;
+    padding-right: 0.6em;
+  }
+
+  .logo-serif {
+    font-family: var(--font-serif);
+    font-weight: 600;
+    font-size: clamp(30px, 4.5vw, 40px);
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--salbei-tief);
+    line-height: 1;
+  }
+
+  .logo-script {
+    position: absolute;
+    right: -0.35em;
+    bottom: -0.42em;
+    font-size: clamp(26px, 3.8vw, 34px);
+    transform: rotate(-5deg);
+    line-height: 1;
+  }
+
+  .logo-subline {
+    margin-top: 13px;
+    font-size: 10.5px;
+    letter-spacing: 0.34em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+  }
+
+  @media (max-width: 780px) {
+    .site-header {
+      padding: 22px 0 18px;
+    }
+
+    .header-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .logo {
+      order: -1;
+    }
+
+    .nav {
+      justify-content: center;
+      gap: 20px;
+    }
+  }
+</style>

@@ -9,5 +9,18 @@
     "build": "astro build",
     "preview": "astro preview",
     "check": "astro check"
+  },
+  "dependencies": {
+    "@astrojs/rss": "^4.0.19",
+    "@astrojs/sitemap": "^3.7.3",
+    "@fontsource/cormorant-garamond": "^5.2.11",
+    "@fontsource/great-vibes": "^5.2.8",
+    "@fontsource/inter": "^5.2.8",
+    "@sveltia/cms": "0.170.2",
+    "astro": "^5.18.2"
+  },
+  "devDependencies": {
+    "@astrojs/check": "^0.9.9",
+    "typescript": "^5.9.3"
   }
 }

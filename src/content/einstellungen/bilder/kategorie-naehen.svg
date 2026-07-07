@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 1000" role="img" aria-label="Platzhalterbild Kategorie Nähen: Knöpfe und Stichlinien">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0.5" y2="1">
+      <stop offset="0" stop-color="#F7F1ED"/>
+      <stop offset="1" stop-color="#D8E0D4"/>
+    </linearGradient>
+  </defs>
+  <rect width="800" height="1000" fill="url(#bg)"/>
+  <circle cx="620" cy="180" r="150" fill="#EFD9D1" opacity="0.55"/>
+  <!-- Zickzack-Naht -->
+  <path d="M 60 120 L 140 190 L 220 120 L 300 190 L 380 120 L 460 190"
+        fill="none" stroke="#B98A78" stroke-width="4" stroke-linecap="round" opacity="0.8"/>
+  <!-- großer Knopf -->
+  <g transform="translate(400 500)">
+    <circle r="180" fill="#8A9A7B"/>
+    <circle r="180" fill="none" stroke="#5F6F52" stroke-width="6"/>
+    <circle r="140" fill="none" stroke="#F7F1ED" stroke-width="3" stroke-dasharray="2 16" stroke-linecap="round" opacity="0.8"/>
+    <circle cx="-42" cy="-42" r="16" fill="#F7F1ED"/>
+    <circle cx="42" cy="-42" r="16" fill="#F7F1ED"/>
+    <circle cx="-42" cy="42" r="16" fill="#F7F1ED"/>
+    <circle cx="42" cy="42" r="16" fill="#F7F1ED"/>
+    <path d="M -42 -42 L 42 42 M 42 -42 L -42 42" stroke="#5F6F52" stroke-width="6" stroke-linecap="round"/>
+  </g>
+  <!-- kleine Knöpfe -->
+  <g transform="translate(190 760)">
+    <circle r="70" fill="#CDA698"/>
+    <circle cx="-16" cy="-16" r="8" fill="#F7F1ED"/>
+    <circle cx="16" cy="-16" r="8" fill="#F7F1ED"/>
+    <circle cx="-16" cy="16" r="8" fill="#F7F1ED"/>
+    <circle cx="16" cy="16" r="8" fill="#F7F1ED"/>
+  </g>
+  <g transform="translate(620 800)">
+    <circle r="55" fill="#FFFFFF"/>
+    <circle r="55" fill="none" stroke="#CDA698" stroke-width="4"/>
+    <circle cx="-12" cy="-12" r="6" fill="#CDA698"/>
+    <circle cx="12" cy="-12" r="6" fill="#CDA698"/>
+    <circle cx="-12" cy="12" r="6" fill="#CDA698"/>
+    <circle cx="12" cy="12" r="6" fill="#CDA698"/>
+  </g>
+  <!-- laufende Naht unten -->
+  <path d="M 80 920 C 250 890, 550 950, 720 900"
+        fill="none" stroke="#5F6F52" stroke-width="4" stroke-linecap="round" stroke-dasharray="16 12" opacity="0.7"/>
+</svg>

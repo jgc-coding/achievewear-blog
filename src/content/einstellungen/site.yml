@@ -1,0 +1,22 @@
+title: AchieveWear
+tagline: Nähen & Laufen
+logoSerif: Achieve
+logoScript: wear
+description: >-
+  AchieveWear — der Blog rund ums Nähen für die Laufstrecke. Anleitungen,
+  Schnittmuster und ehrliche Geschichten vom Laufen. In deinem Tempo.
+noindex: true
+footerText: '© {jahr} AchieveWear · In deinem Tempo. Schritt für Schritt.'
+pinterestUrl: ''
+newsletterUrl: ''
+signatureText: 'In deinem Tempo. Schritt für Schritt. 🌿'
+navLeft:
+  - label: Über mich
+    url: /ueber-mich
+  - label: Blog
+    url: /blog
+navRight:
+  - label: Nähen
+    url: /kategorie/naehen
+  - label: Newsletter
+    url: /newsletter

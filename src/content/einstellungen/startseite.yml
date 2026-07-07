@@ -1,0 +1,39 @@
+welcome:
+  headline: Willkommen
+  scriptLine: bei AchieveWear
+  text: >-
+    Schön, dass du da bist! Hier dreht sich alles ums Nähen für die
+    Laufstrecke — mit Anleitungen, Schnittmustern und ehrlichen Geschichten
+    vom Laufen. Egal ob du selbst läufst oder für einen laufenden Menschen
+    nähst: Hier bist du richtig.
+  buttonText: Mehr über mich
+  buttonUrl: /ueber-mich
+  image: bilder/startseite-welcome.svg
+  imageAlt: 'Zarte Illustration: Garnrollen neben einer geschwungenen Laufstrecke'
+about:
+  headline: Über mich
+  scriptLine: Echtheit statt Perfektion
+  text: >-
+    Ich bin Lisa — Marathon- und Ultraläuferin und leidenschaftliche
+    Hobby-Näherin. Auf AchieveWear verbinde ich beide Welten und zeige dir,
+    wie du funktionale Begleiter für die Laufstrecke selbst nähst.
+    In deinem Tempo, Schritt für Schritt.
+  buttonText: Meine Geschichte
+  buttonUrl: /ueber-mich
+  image: bilder/startseite-about.svg
+  imageAlt: 'Zarte Illustration: Herz aus einer Nählinie'
+blogSection:
+  headline: Aus dem Blog
+  scriptLine: zwei Welten, ein Tempo
+quote:
+  text: >-
+    Manchmal muss sich alles neu sortieren, damit wir da ankommen,
+    wo wir gemeint sind.
+  attribution: Lisa
+newsletter:
+  show: true
+  headline: Post von der Strecke
+  text: >-
+    Neue Anleitungen, Schnittmuster und Geschichten — alle ein bis zwei
+    Wochen direkt in dein Postfach.
+  buttonText: Newsletter abonnieren
