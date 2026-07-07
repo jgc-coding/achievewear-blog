@@ -73,7 +73,14 @@ const newsletterZiel = site.newsletterUrl || withBase('/newsletter');
               href={withBase(`/kategorie/${kategorie.slug}`)}
               style={`--karten-farbe:${kategorie.color};--verzoegerung:${index * 0.12}s`}
             >
-              <span class="kategorie-label script" aria-hidden="true">
+              <span
+                class:list={[
+                  'kategorie-label',
+                  'script',
+                  { 'label-lang': kategorie.name.length > 12 },
+                ]}
+                aria-hidden="true"
+              >
                 {kategorie.name}
               </span>
               <span class="kategorie-rahmen">
@@ -230,6 +237,12 @@ const newsletterZiel = site.newsletterUrl || withBase('/newsletter');
     pointer-events: none;
   }
 
+  /* Lange Kategorienamen etwas kleiner, damit das Label sicher in die Karte passt */
+  .kategorie-label.label-lang {
+    font-size: clamp(23px, 2.5vw, 30px);
+    bottom: 32px;
+  }
+
   .kategorie-rahmen {
     display: block;
     background: var(--weiss);
@@ -344,6 +357,11 @@ const newsletterZiel = site.newsletterUrl || withBase('/newsletter');
     .welcome-bild {
       margin-top: -46px;
       max-width: 300px;
+    }
+
+    .welcome-headline {
+      font-size: clamp(28px, 8.6vw, 40px);
+      letter-spacing: 0.13em;
     }
 
     .welcome-text {

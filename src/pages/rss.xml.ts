@@ -14,7 +14,8 @@ export async function GET(context: APIContext) {
   return rss({
     title: site.title,
     description: site.description,
-    site: context.site ?? 'http://localhost:4321',
+    // Kanal-Link inkl. Base-Pfad (Item-Links sind ohnehin absolut angegeben)
+    site: new URL(withBase('/'), context.site ?? 'http://localhost:4321'),
     items: posts.map((post) => ({
       title: post.data.title,
       description: post.data.description,
