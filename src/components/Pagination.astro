@@ -1,0 +1,78 @@
+---
+// Blätter-Navigation. Die URLs werden bewusst selbst gebaut (statt page.url.*),
+// damit der Base-Pfad garantiert über withBase() läuft.
+import { withBase } from '../lib/url';
+
+interface Props {
+  currentPage: number;
+  lastPage: number;
+  basePath: string; // z. B. "/blog" oder "/kategorie/naehen"
+}
+
+const { currentPage, lastPage, basePath } = Astro.props;
+
+const seitenUrl = (nummer: number) =>
+  nummer <= 1 ? withBase(basePath) : withBase(`${basePath}/${nummer}`);
+
+const neuere = currentPage > 1 ? seitenUrl(currentPage - 1) : undefined;
+const aeltere = currentPage < lastPage ? seitenUrl(currentPage + 1) : undefined;
+---
+
+{
+  lastPage > 1 && (
+    <nav class="pagination" aria-label="Weitere Seiten">
+      {neuere ? (
+        <a href={neuere}>
+          <span aria-hidden="true">←</span> Neuere Beiträge
+        </a>
+      ) : (
+        <span class="platz" />
+      )}
+      <span class="stand">
+        Seite {currentPage} von {lastPage}
+      </span>
+      {aeltere ? (
+        <a href={aeltere}>
+          Ältere Beiträge <span aria-hidden="true">→</span>
+        </a>
+      ) : (
+        <span class="platz" />
+      )}
+    </nav>
+  )
+}
+
+<style>
+  .pagination {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    margin-top: clamp(40px, 6vw, 64px);
+    padding-top: 22px;
+    border-top: 1px solid rgba(58, 58, 58, 0.1);
+  }
+
+  .pagination a {
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    text-decoration: none;
+    color: var(--salbei-tief);
+    transition: color 0.2s ease;
+  }
+
+  .pagination a:hover {
+    color: var(--altrose-dunkel);
+  }
+
+  .stand {
+    font-size: 12.5px;
+    color: var(--text-muted);
+  }
+
+  .platz {
+    min-width: 40px;
+  }
+</style>

@@ -1,0 +1,118 @@
+---
+// Blog-Übersicht mit Kategorie-Filterleiste und Blätter-Navigation (6 Artikel/Seite).
+import type { GetStaticPaths } from 'astro';
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import SektionsTitel from '../../components/SektionsTitel.astro';
+import PostKarte from '../../components/PostKarte.astro';
+import Pagination from '../../components/Pagination.astro';
+import { getKategorien } from '../../lib/settings';
+import { withBase } from '../../lib/url';
+
+export const getStaticPaths = (async ({ paginate }) => {
+  const posts = (await getCollection('blog', ({ data }) => !data.draft)).sort(
+    (a, b) => b.data.date.valueOf() - a.data.date.valueOf()
+  );
+  return paginate(posts, { pageSize: 6 });
+}) satisfies GetStaticPaths;
+
+const { page } = Astro.props;
+const kategorien = await getKategorien();
+const kategorieVon = (slug: string) => kategorien.find((k) => k.slug === slug);
+---
+
+<BaseLayout
+  title="Blog"
+  description="Alle Artikel auf AchieveWear: Nähanleitungen für die Laufstrecke, Erklär-Artikel zur Lauf-Welt und persönliche Geschichten."
+>
+  <div class="container blog-index">
+    <SektionsTitel text="Der Blog" script="Anleitungen & Geschichten" />
+
+    <nav class="filter" aria-label="Nach Kategorie filtern">
+      <a class="filter-pill aktiv" href={withBase('/blog')} aria-current="page">Alle</a>
+      {
+        kategorien.map((kategorie) => (
+          <a class="filter-pill" href={withBase(`/kategorie/${kategorie.slug}`)}>
+            {kategorie.name}
+          </a>
+        ))
+      }
+    </nav>
+
+    <div class="post-grid">
+      {
+        page.data.map((post) => {
+          const kategorie = kategorieVon(post.data.category);
+          return (
+            <PostKarte
+              post={post}
+              kategorieName={kategorie?.name ?? post.data.category}
+              kategorieFarbe={kategorie?.color ?? 'var(--salbei)'}
+            />
+          );
+        })
+      }
+    </div>
+
+    <Pagination currentPage={page.currentPage} lastPage={page.lastPage} basePath="/blog" />
+  </div>
+</BaseLayout>
+
+<style is:global>
+  .blog-index {
+    padding-top: clamp(30px, 5vw, 56px);
+  }
+
+  .filter {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: clamp(32px, 5vw, 52px);
+  }
+
+  .filter-pill {
+    font-size: 11.5px;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    text-decoration: none;
+    color: var(--anthrazit);
+    background: var(--weiss);
+    border: 1px solid var(--mint);
+    border-radius: 999px;
+    padding: 8px 18px;
+    transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+  }
+
+  .filter-pill:hover {
+    border-color: var(--salbei);
+    color: var(--salbei-tief);
+  }
+
+  .filter-pill.aktiv {
+    background: var(--salbei);
+    border-color: var(--salbei);
+    color: var(--creme);
+  }
+
+  .post-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: clamp(24px, 4vw, 48px);
+  }
+
+  @media (max-width: 900px) {
+    .post-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  @media (max-width: 640px) {
+    .post-grid {
+      grid-template-columns: 1fr;
+      max-width: 360px;
+      margin-inline: auto;
+    }
+  }
+</style>

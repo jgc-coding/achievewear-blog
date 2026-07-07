@@ -1,0 +1,266 @@
+---
+// Artikelseite: Kategorie-Pill, Titel, Meta-Zeile (Datum · Lesezeit), Titelbild,
+// Artikeltext mit Prose-Typografie, Signatur-Zeile, Schlagwörter, verwandte Artikel.
+import { getCollection, render } from 'astro:content';
+import { Image, getImage } from 'astro:assets';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import PostKarte from '../../components/PostKarte.astro';
+import YouTubeConsent from '../../components/YouTubeConsent.astro';
+import { getKategorien, getSiteSettings } from '../../lib/settings';
+import { withBase } from '../../lib/url';
+import { formatDatum, isoDatum } from '../../lib/format';
+
+export async function getStaticPaths() {
+  const posts = await getCollection('blog', ({ data }) => !data.draft);
+  return posts.map((post) => ({ params: { slug: post.id }, props: { post } }));
+}
+
+const { post } = Astro.props;
+const { Content, remarkPluginFrontmatter } = await render(post);
+
+const site = await getSiteSettings();
+const kategorien = await getKategorien();
+const kategorie = kategorien.find((k) => k.slug === post.data.category);
+
+const verwandte = (
+  await getCollection(
+    'blog',
+    ({ data, id }) => !data.draft && data.category === post.data.category && id !== post.id
+  )
+)
+  .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf())
+  .slice(0, 2);
+
+// Open-Graph-Bild (absolute URL; der Asset-Pfad enthält den Base-Pfad bereits)
+const ogBild = await getImage({ src: post.data.cover, width: 1200 });
+const ogImageUrl = Astro.site ? new URL(ogBild.src, Astro.site).href : undefined;
+---
+
+<BaseLayout
+  title={post.data.title}
+  description={post.data.description}
+  ogImage={ogImageUrl}
+  ogType="article"
+>
+  <article class="container artikel">
+    <header class="artikel-kopf">
+      {
+        kategorie && (
+          <a class="kategorie-pill" href={withBase(`/kategorie/${kategorie.slug}`)}>
+            {kategorie.name}
+          </a>
+        )
+      }
+      <h1 class="artikel-titel">{post.data.title}</h1>
+      <p class="artikel-meta">
+        <time datetime={isoDatum(post.data.date)}>{formatDatum(post.data.date)}</time>
+        <span class="punkt" aria-hidden="true">·</span>
+        <span>{remarkPluginFrontmatter.lesezeit} Min. Lesezeit</span>
+        {
+          post.data.updated && (
+            <>
+              <span class="punkt" aria-hidden="true">·</span>
+              <span>Aktualisiert am {formatDatum(post.data.updated)}</span>
+            </>
+          )
+        }
+      </p>
+    </header>
+
+    <div class="artikel-cover">
+      <Image
+        src={post.data.cover}
+        alt={post.data.coverAlt}
+        widths={[760, 1200]}
+        sizes="(max-width: 900px) 94vw, 860px"
+        loading="eager"
+      />
+    </div>
+
+    <div class="prose artikel-text">
+      <Content />
+    </div>
+
+    {
+      post.data.signature && site.signatureText && (
+        <p class="script signatur">{site.signatureText}</p>
+      )
+    }
+
+    {
+      post.data.tags.length > 0 && (
+        <p class="tags">
+          {post.data.tags.map((tag) => (
+            <span class="tag">#{tag}</span>
+          ))}
+        </p>
+      )
+    }
+
+    <p class="zurueck">
+      <a href={withBase('/blog')}><span aria-hidden="true">←</span> Alle Artikel</a>
+    </p>
+  </article>
+
+  {
+    verwandte.length > 0 && kategorie && (
+      <aside class="container verwandt" aria-label={`Mehr aus ${kategorie.name}`}>
+        <h2 class="verwandt-titel">
+          Mehr aus <span class="script verwandt-script">{kategorie.name}</span>
+        </h2>
+        <div class="verwandt-grid">
+          {verwandte.map((eintrag) => (
+            <PostKarte post={eintrag} kategorieName={kategorie.name} kategorieFarbe={kategorie.color} />
+          ))}
+        </div>
+      </aside>
+    )
+  }
+
+  <YouTubeConsent />
+</BaseLayout>
+
+<style>
+  .artikel {
+    max-width: 900px;
+    padding-top: clamp(26px, 4vw, 48px);
+  }
+
+  .artikel-kopf {
+    text-align: center;
+    margin-bottom: clamp(28px, 4vw, 40px);
+  }
+
+  .kategorie-pill {
+    display: inline-block;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    text-decoration: none;
+    color: var(--salbei-tief);
+    background: var(--mint);
+    border-radius: 999px;
+    padding: 7px 16px;
+    margin-bottom: 18px;
+    transition: background 0.2s ease;
+  }
+
+  .kategorie-pill:hover {
+    background: var(--rosa-zart);
+  }
+
+  .artikel-titel {
+    font-size: clamp(32px, 5vw, 50px);
+    letter-spacing: 0.04em;
+    max-width: 22em;
+    margin-inline: auto;
+  }
+
+  .artikel-meta {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 10px;
+    font-size: 13px;
+    color: var(--text-muted);
+    margin: 0;
+  }
+
+  .punkt {
+    color: var(--altrose);
+  }
+
+  .artikel-cover {
+    background: var(--weiss);
+    padding: clamp(8px, 1.3vw, 13px);
+    border-radius: 2px;
+    box-shadow: var(--schatten-weich);
+    margin-bottom: clamp(32px, 5vw, 52px);
+  }
+
+  .artikel-cover :global(img) {
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    object-fit: cover;
+  }
+
+  .artikel-text {
+    max-width: 68ch;
+    margin-inline: auto;
+  }
+
+  .signatur {
+    text-align: center;
+    font-size: clamp(28px, 3.4vw, 36px);
+    margin: clamp(36px, 5vw, 56px) auto 0;
+    line-height: 1.3;
+  }
+
+  .tags {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin: 28px 0 0;
+  }
+
+  .tag {
+    font-size: 12px;
+    color: var(--text-muted);
+    background: var(--rosa-zart);
+    border-radius: 999px;
+    padding: 5px 13px;
+  }
+
+  .zurueck {
+    text-align: center;
+    margin: clamp(32px, 5vw, 48px) 0 0;
+  }
+
+  .zurueck a {
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    text-decoration: none;
+    color: var(--salbei-tief);
+  }
+
+  .zurueck a:hover {
+    color: var(--altrose-dunkel);
+  }
+
+  .verwandt {
+    margin-top: clamp(56px, 8vw, 90px);
+    max-width: 900px;
+  }
+
+  .verwandt-titel {
+    text-align: center;
+    font-size: clamp(24px, 3vw, 30px);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-bottom: clamp(24px, 4vw, 36px);
+  }
+
+  .verwandt-script {
+    text-transform: none;
+    letter-spacing: 0;
+    font-size: 1.25em;
+  }
+
+  .verwandt-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: clamp(24px, 4vw, 48px);
+  }
+
+  @media (max-width: 640px) {
+    .verwandt-grid {
+      grid-template-columns: 1fr;
+      max-width: 360px;
+      margin-inline: auto;
+    }
+  }
+</style>

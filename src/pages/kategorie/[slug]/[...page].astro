@@ -1,0 +1,91 @@
+---
+// Kategorie-Seiten (die drei Säulen) mit eigener Einleitung und Blätter-Navigation.
+// Hinweis: paginate([]) erzeugt immer mindestens eine Seite — auch eine (noch)
+// leere Kategorie bekommt also ihre Seite statt eines 404-Fehlers.
+import type { GetStaticPaths } from 'astro';
+import { getCollection, getEntry } from 'astro:content';
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import SektionsTitel from '../../../components/SektionsTitel.astro';
+import PostKarte from '../../../components/PostKarte.astro';
+import Pagination from '../../../components/Pagination.astro';
+import { getKategorien } from '../../../lib/settings';
+import { withBase } from '../../../lib/url';
+
+export const getStaticPaths = (async ({ paginate }) => {
+  const einstellungen = await getEntry('kategorien', 'kategorien');
+  if (!einstellungen) {
+    throw new Error('Einstellungen fehlen: src/content/einstellungen/kategorien.yml');
+  }
+
+  const posts = (await getCollection('blog', ({ data }) => !data.draft)).sort(
+    (a, b) => b.data.date.valueOf() - a.data.date.valueOf()
+  );
+
+  return einstellungen.data.kategorien.flatMap((kategorie) =>
+    paginate(
+      posts.filter((post) => post.data.category === kategorie.slug),
+      { params: { slug: kategorie.slug }, props: { kategorie }, pageSize: 6 }
+    )
+  );
+}) satisfies GetStaticPaths;
+
+const { page, kategorie } = Astro.props;
+const kategorien = await getKategorien();
+---
+
+<BaseLayout title={kategorie.name} description={kategorie.description}>
+  <div class="container blog-index">
+    <SektionsTitel text={kategorie.name} />
+    <p class="kategorie-beschreibung">{kategorie.description}</p>
+
+    <nav class="filter" aria-label="Nach Kategorie filtern">
+      <a class="filter-pill" href={withBase('/blog')}>Alle</a>
+      {
+        kategorien.map((eintrag) => (
+          <a
+            class:list={['filter-pill', { aktiv: eintrag.slug === kategorie.slug }]}
+            href={withBase(`/kategorie/${eintrag.slug}`)}
+            aria-current={eintrag.slug === kategorie.slug ? 'page' : undefined}
+          >
+            {eintrag.name}
+          </a>
+        ))
+      }
+    </nav>
+
+    {
+      page.data.length > 0 ? (
+        <div class="post-grid">
+          {page.data.map((post) => (
+            <PostKarte post={post} kategorieName={kategorie.name} kategorieFarbe={kategorie.color} />
+          ))}
+        </div>
+      ) : (
+        <p class="leer-hinweis">
+          In dieser Kategorie ist noch kein Artikel erschienen — schau bald wieder vorbei! 🌿
+        </p>
+      )
+    }
+
+    <Pagination
+      currentPage={page.currentPage}
+      lastPage={page.lastPage}
+      basePath={`/kategorie/${kategorie.slug}`}
+    />
+  </div>
+</BaseLayout>
+
+<style>
+  .kategorie-beschreibung {
+    text-align: center;
+    max-width: 54ch;
+    margin: -14px auto clamp(28px, 4vw, 40px);
+    color: var(--text-muted);
+  }
+
+  .leer-hinweis {
+    text-align: center;
+    color: var(--text-muted);
+    padding: clamp(32px, 6vw, 64px) 0;
+  }
+</style>

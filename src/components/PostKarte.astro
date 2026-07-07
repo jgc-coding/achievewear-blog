@@ -1,0 +1,115 @@
+---
+// Artikel-Karte für Blog-Übersicht und Kategorie-Seiten:
+// Hochkant-Titelbild im weißen Rahmen, Kategorie + Datum, Titel, Teaser.
+import { Image } from 'astro:assets';
+import type { CollectionEntry } from 'astro:content';
+import { withBase } from '../lib/url';
+import { formatDatum, isoDatum } from '../lib/format';
+
+interface Props {
+  post: CollectionEntry<'blog'>;
+  kategorieName: string;
+  kategorieFarbe: string;
+}
+
+const { post, kategorieName, kategorieFarbe } = Astro.props;
+---
+
+<article class="post-karte">
+  <a class="karte-link" href={withBase(`/blog/${post.id}`)}>
+    <span class="karte-rahmen">
+      <Image
+        src={post.data.cover}
+        alt={post.data.coverAlt}
+        widths={[340, 680]}
+        sizes="(max-width: 780px) 86vw, 330px"
+      />
+    </span>
+    <span class="karte-meta">
+      <span class="karte-kategorie" style={`color:${kategorieFarbe}`}>{kategorieName}</span>
+      <span class="karte-punkt" aria-hidden="true">·</span>
+      <time datetime={isoDatum(post.data.date)}>{formatDatum(post.data.date)}</time>
+    </span>
+    <h3 class="karte-titel">{post.data.title}</h3>
+    <p class="karte-teaser">{post.data.description}</p>
+    <span class="karte-weiter">Weiterlesen <span aria-hidden="true">→</span></span>
+  </a>
+</article>
+
+<style>
+  .karte-link {
+    display: block;
+    text-decoration: none;
+    color: inherit;
+    transition: transform 0.35s ease;
+  }
+
+  .karte-link:hover {
+    transform: translateY(-6px);
+  }
+
+  .karte-rahmen {
+    display: block;
+    background: var(--weiss);
+    padding: 9px;
+    border-radius: 2px;
+    box-shadow: var(--schatten-weich);
+    transition: box-shadow 0.35s ease;
+  }
+
+  .karte-link:hover .karte-rahmen {
+    box-shadow: 0 22px 44px rgba(58, 58, 58, 0.16);
+  }
+
+  .karte-rahmen :global(img) {
+    width: 100%;
+    aspect-ratio: 4 / 5;
+    object-fit: cover;
+  }
+
+  .karte-meta {
+    display: flex;
+    align-items: baseline;
+    gap: 8px;
+    margin-top: 16px;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+  }
+
+  .karte-punkt {
+    color: var(--altrose);
+  }
+
+  .karte-titel {
+    font-size: clamp(21px, 2.4vw, 25px);
+    letter-spacing: 0.02em;
+    margin: 8px 0 6px;
+    transition: color 0.2s ease;
+  }
+
+  .karte-link:hover .karte-titel {
+    color: var(--altrose-dunkel);
+  }
+
+  .karte-teaser {
+    font-size: 14.5px;
+    line-height: 1.65;
+    color: var(--text-muted);
+    margin: 0 0 10px;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  .karte-weiter {
+    font-size: 11.5px;
+    font-weight: 600;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--salbei-tief);
+  }
+</style>

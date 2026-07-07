@@ -1,0 +1,25 @@
+---
+// Klick-Logik der DSGVO-2-Klick-YouTube-Einbettung.
+// Das Markup erzeugt src/plugins/remark-youtube.mjs, die Optik steht in global.css.
+// Erst beim Klick wird das Video von youtube-nocookie.com geladen.
+---
+
+<script>
+  document.addEventListener('click', (event) => {
+    const ziel = event.target as Element | null;
+    const button = ziel?.closest('.yt-consent-button');
+    if (!button) return;
+
+    const container = button.closest('.yt-consent') as HTMLElement | null;
+    const videoId = container?.dataset.ytId;
+    if (!container || !videoId || !/^[\w-]{11}$/.test(videoId)) return;
+
+    const iframe = document.createElement('iframe');
+    iframe.src = `https://www.youtube-nocookie.com/embed/${videoId}?autoplay=1`;
+    iframe.title = 'YouTube-Video';
+    iframe.allow =
+      'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share';
+    iframe.allowFullscreen = true;
+    container.replaceChildren(iframe);
+  });
+</script>
