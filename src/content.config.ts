@@ -14,6 +14,14 @@ const relImage = (image: SchemaContext['image']) =>
     image()
   );
 
+// Sveltia schreibt ein leeres optionales Datumsfeld als '' — das darf den Build
+// nicht brechen (im Roundtrip-Test verifiziert), sondern zählt als "nicht gesetzt".
+const optionalesDatum = () =>
+  z.preprocess(
+    (value) => (value === '' || value === null ? undefined : value),
+    z.coerce.date().optional()
+  );
+
 const blog = defineCollection({
   loader: glob({ pattern: '**/*.md', base: './src/content/blog' }),
   schema: ({ image }) =>
@@ -21,7 +29,7 @@ const blog = defineCollection({
       title: z.string(),
       description: z.string(),
       date: z.coerce.date(),
-      updated: z.coerce.date().optional(),
+      updated: optionalesDatum(),
       category: z.enum(KATEGORIE_SLUGS),
       tags: z.array(z.string()).default([]),
       cover: relImage(image),
