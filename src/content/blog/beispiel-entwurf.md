@@ -6,7 +6,7 @@ description: >-
 date: 2026-07-01
 category: naehen
 tags: []
-cover: bilder/cover-armsleeves.svg
+cover: bilder/beispiel-entwurf/cover-armsleeves.svg
 coverAlt: Platzhalterbild
 draft: true
 signature: true

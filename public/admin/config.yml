@@ -48,8 +48,11 @@ collections:
     slug: '{{slug}}'
     summary: '{{title}}'
     sortable_fields: [date, title]
-    media_folder: bilder # Bilder landen neben den Artikeln in blog/bilder/
-    public_folder: bilder
+    # Jeder Artikel bekommt seinen EIGENEN Bilder-Ordner (bilder/<artikel-slug>/).
+    # Wichtig: Beim Löschen eines Artikels löscht Sveltia dessen Bilder-Ordner mit —
+    # dank Pro-Artikel-Ordnern trifft das nie die Bilder anderer Artikel.
+    media_folder: 'bilder/{{slug}}'
+    public_folder: 'bilder/{{slug}}'
     fields:
       - name: title
         label: Titel

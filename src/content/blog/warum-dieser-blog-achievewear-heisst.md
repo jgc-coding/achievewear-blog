@@ -7,7 +7,7 @@ date: 2026-06-10
 category: geschichten
 tags:
   - hinter den kulissen
-cover: bilder/cover-achievewear.svg
+cover: bilder/warum-dieser-blog-achievewear-heisst/cover-achievewear.svg
 coverAlt: 'Illustration: ein Herz, halb Nählinie, halb Laufstrecke'
 draft: false
 signature: true

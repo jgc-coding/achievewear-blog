@@ -9,7 +9,7 @@ tags:
   - armsleeves
   - anleitung
   - anfängerfreundlich
-cover: bilder/cover-armsleeves.svg
+cover: bilder/armsleeves-selber-naehen-einstieg/cover-armsleeves.svg
 coverAlt: 'Illustration: zwei Armsleeves mit Stichlinien und Maßband'
 draft: false
 signature: true
