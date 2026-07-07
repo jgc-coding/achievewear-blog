@@ -49,6 +49,10 @@ Remove-Item Env:BASE_PATH; Remove-Item Env:SITE_URL
 
 ## Stolperfallen (gelernt/verifiziert)
 
+- **Sveltia 0.170.2: Eintrag-Löschen entfernt ALLE Bilder der Collection** (zweifach live nachgewiesen, auch mit Pro-Artikel-Ordnern `bilder/{{slug}}`). Deshalb `delete: false` für Blog-Artikel; „Löschen" = Entwurf-Schalter, endgültig löscht Gabriel per git. Nach jedem Sveltia-Update in einem Test-Repo neu prüfen, bevor delete wieder aktiviert wird.
+- Sveltia schreibt leere optionale Datumsfelder als `''` — Schema fängt das ab (`optionalesDatum()` in content.config.ts). Beim Anlegen neuer optionaler Datetime-Felder daran denken.
+- npm audit meldet Astro-5-Advisories (XSS/SSRF) mit Fix erst in Astro 7: betreffen SSR/Dev-Server-Szenarien, nicht unsere statische Seite mit vertrauenswürdiger Autorin. Bewusst akzeptiert; bei Astro-Major-Upgrade neu bewerten.
+
 - Sveltia-UI-Chrome ist englisch (nur en/ja) — Inhaltsfelder sind deutsch gelabelt, Rest erklärt `docs/anleitung-fuer-lisa.md`.
 - Sveltia hat keinen Editorial Workflow: **jeder Save committet direkt auf `main`** und löst einen Deploy aus. Entwürfe (`Entwurf`-Schalter) erscheinen nicht auf der Website, liegen aber sichtbar im Repo.
 - Sveltia-Login: „Sign In with Token" mit fine-grained PAT (nur dieses Repo, Contents Read/Write). PATs anderer Konten funktionieren NICHT für dieses Repo (GitHub-Limitation) — Token muss von jgc-coding kommen.

@@ -41,7 +41,11 @@ collections:
     description: Deine Artikel — neu anlegen, bearbeiten oder löschen.
     folder: src/content/blog
     create: true
-    delete: true
+    # Löschen bewusst AUS: Sveltia 0.170.2 löscht beim Entfernen eines Eintrags
+    # ALLE Bilder der Collection mit (im Roundtrip-Test zweifach nachgewiesen,
+    # auch mit Pro-Artikel-Ordnern). „Löschen" für Lisa = Entwurf-Schalter AN;
+    # endgültiges Löschen übernimmt Gabriel per git. Bei Sveltia-Updates neu testen.
+    delete: false
     extension: md
     format: yaml-frontmatter
     identifier_field: title
