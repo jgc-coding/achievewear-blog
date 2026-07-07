@@ -1,9 +1,8 @@
 ---
 title: 'Armsleeves selber nähen: der einfache Einstieg'
-description: >-
-  Armstulpen für die Laufstrecke aus einem geraden Schlauch mit Saum — das
-  perfekte erste Projekt, wenn du fürs Laufen nähen möchtest.
+description: Armstulpen für die Laufstrecke aus einem geraden Schlauch mit Saum — das perfekte erste Nähprojekt, wenn du fürs Laufen nähen möchtest.
 date: 2026-06-24
+updated: ''
 category: naehen
 tags:
   - armsleeves
@@ -15,7 +14,7 @@ draft: false
 signature: true
 ---
 
-*Dies ist ein Platzhalter-Artikel. Er zeigt, wie Beiträge auf AchieveWear aussehen — ersetze ihn einfach im Redaktionsbereich durch deinen eigenen Text.*
+_Dies ist ein Platzhalter-Artikel. Er zeigt, wie Beiträge auf AchieveWear aussehen — ersetze ihn einfach im Redaktionsbereich durch deinen eigenen Text._
 
 Armsleeves sind das ideale erste Nähprojekt für die Laufstrecke: ein gerader Schlauch, zwei Säume, fertig. Und trotzdem sind sie draußen Gold wert — morgens angezogen, unterwegs einfach heruntergeschoben oder ausgezogen, wenn die Sonne kommt.
 
