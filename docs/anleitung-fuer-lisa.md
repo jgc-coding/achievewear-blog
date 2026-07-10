@@ -59,6 +59,12 @@ Tipp: Wenn du einen älteren Artikel inhaltlich überarbeitest, fülle **„Aktu
 
 Unter **„Seiten"** findest du: **Über mich**, **Newsletter**, **Impressum**, **Datenschutz**. Anklicken, Text ändern, „Publish" — genau wie bei Artikeln. (Neue Seiten anlegen oder löschen geht hier bewusst nicht.)
 
+## Die Suche
+
+Deine Leser können unter `<Website-Adresse>/suche/` alle veröffentlichten Artikel durchsuchen — der Link dazu steht auch ganz unten auf jeder Seite. Der Suchindex aktualisiert sich bei jedem Veröffentlichen automatisch.
+
+Wenn du die Suche ins Menü aufnehmen möchtest: **Einstellungen → Website → Menü**, Beschriftung „Suche", Ziel `/suche`.
+
 ## Einstellungen — hier machst du die Website zu deiner
 
 Unter **„Einstellungen"** gibt es vier Bereiche:
@@ -97,7 +103,7 @@ Die Knöpfe des Redaktionssystems sind (noch) englisch — das hier ist alles, w
 
 ## Drei goldene Regeln
 
-1. **Nichts Privates veröffentlichen** — keine Adressen, keine Namen, die nicht öffentlich sein sollen. (Und wie besprochen: die Kinder bleiben komplett draußen.)
+1. **Nichts Privates veröffentlichen** — keine Adressen und keine Namen oder Details von Menschen aus deinem privaten Umfeld, die nicht öffentlich sein sollen.
 2. **Nur eigene Bilder oder Bilder mit Erlaubnis** hochladen (Sportograf-Fotos sind privat lizenziert!). Immer einen Alt-Text dazuschreiben.
 3. **Done is better than perfect.** 🌿
 
