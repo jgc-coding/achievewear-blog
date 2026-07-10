@@ -202,12 +202,10 @@ const ogImageUrl = Astro.site ? new URL(ogBild.src, Astro.site).href : undefined
     margin: 28px 0 0;
   }
 
+  /* Bewusst keine Knopf-Optik — Schlagwörter sind (noch) keine Links. */
   .tag {
     font-size: 12px;
     color: var(--text-muted);
-    background: var(--rosa-zart);
-    border-radius: 999px;
-    padding: 5px 13px;
   }
 
   .zurueck {

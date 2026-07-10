@@ -1,0 +1,75 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630" role="img" aria-label="AchieveWear — Naehen und Laufen">
+  <!--
+    Standard-Teilen-Bild (og:image) fuer alle Seiten OHNE eigenes Titelbild.
+    DESIGN-QUELLE: Diese SVG-Datei wird nirgends importiert. Eingebunden ist
+    das daraus gerasterte og-standard.png (siehe BaseLayout.astro), denn
+    Social-Crawler (WhatsApp/Facebook/Pinterest) verstehen kein SVG, und
+    Astros Bild-Service rastert importierte SVGs grundsaetzlich nicht.
+    Nach einer Aenderung an diesem SVG das PNG neu rastern (im Projekt-Root):
+    node -e "require('sharp')('src/assets/og-standard.svg').resize(1200,630).png().toFile('src/assets/og-standard.png').then(i => console.log(i.width + 'x' + i.height))"
+    BEWUSST OHNE <text>: beim Rastern stehen die Website-Fonts nicht zur
+    Verfuegung (sharp/librsvg nutzt nur Systemschriften), Text wuerde in
+    Ersatzschriften rendern. Die Marke transportiert der og:title.
+    Bildsprache wie startseite-welcome.svg / startseite-about.svg:
+    Garnrollen (Naehen) + gestrichelte Laufstrecke (Laufen) + kleines Herz.
+  -->
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0.55" y2="1">
+      <stop offset="0" stop-color="#F7F1ED"/>
+      <stop offset="1" stop-color="#EFD9D1"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Cremefarbener Hintergrund -->
+  <rect width="1200" height="630" fill="url(#bg)"/>
+
+  <!-- Weiche Deko-Kreise fuer Tiefe, viel ruhige Flaeche -->
+  <circle cx="1040" cy="80" r="215" fill="#D8E0D4" opacity="0.5"/>
+  <circle cx="150" cy="585" r="165" fill="#FFFFFF" opacity="0.4"/>
+
+  <!-- Laufstrecke als gepunkteter Weg, schwingt von unten links nach oben rechts -->
+  <path d="M 120 480 C 300 420, 380 330, 560 330 C 740 330, 830 250, 1010 205"
+        fill="none" stroke="#B98A78" stroke-width="5" stroke-linecap="round"
+        stroke-dasharray="2 20" opacity="0.9"/>
+  <!-- Startpunkt der Strecke -->
+  <circle cx="120" cy="480" r="13" fill="#8A9A7B"/>
+
+  <!-- Kleines Ziel-Herz am Ende der Strecke -->
+  <path d="M 1015 190 C 988 163, 968 148, 968 126 C 968 112, 979 103, 992 103 C 1002 103, 1011 109, 1015 118 C 1019 109, 1028 103, 1038 103 C 1051 103, 1062 112, 1062 126 C 1062 148, 1042 163, 1015 190 Z"
+        fill="#B98A78"/>
+
+  <!-- Loser Faden von der vorderen Garnrolle hinauf zur Strecke -->
+  <path d="M 430 388 C 470 350, 500 340, 555 332"
+        fill="none" stroke="#B98A78" stroke-width="3" opacity="0.6"/>
+
+  <!-- Garnrolle hinten (Salbei) -->
+  <g transform="translate(300 430)">
+    <rect x="-38" y="-70" width="76" height="140" rx="10" fill="#8A9A7B"/>
+    <rect x="-46" y="-84" width="92" height="18" rx="8" fill="#5F6F52"/>
+    <rect x="-46" y="66" width="92" height="18" rx="8" fill="#5F6F52"/>
+    <g stroke="#F7F1ED" stroke-width="3" opacity="0.65">
+      <line x1="-38" y1="-40" x2="38" y2="-32"/>
+      <line x1="-38" y1="-12" x2="38" y2="-4"/>
+      <line x1="-38" y1="16" x2="38" y2="24"/>
+      <line x1="-38" y1="44" x2="38" y2="52"/>
+    </g>
+  </g>
+
+  <!-- Garnrolle vorne (Altrose) -->
+  <g transform="translate(415 470)">
+    <rect x="-38" y="-70" width="76" height="140" rx="10" fill="#CDA698"/>
+    <rect x="-46" y="-84" width="92" height="18" rx="8" fill="#B98A78"/>
+    <rect x="-46" y="66" width="92" height="18" rx="8" fill="#B98A78"/>
+    <g stroke="#F7F1ED" stroke-width="3" opacity="0.65">
+      <line x1="-38" y1="-40" x2="38" y2="-32"/>
+      <line x1="-38" y1="-12" x2="38" y2="-4"/>
+      <line x1="-38" y1="16" x2="38" y2="24"/>
+      <line x1="-38" y1="44" x2="38" y2="52"/>
+    </g>
+  </g>
+
+  <!-- Kleine Akzente wie auf startseite-about.svg -->
+  <circle cx="250" cy="530" r="7" fill="#CDA698"/>
+  <circle cx="300" cy="558" r="5" fill="#8A9A7B"/>
+  <circle cx="208" cy="556" r="4" fill="#B98A78"/>
+</svg>
