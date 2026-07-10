@@ -14,6 +14,8 @@ const start = await getStartseite();
 const kategorien = await getKategorien();
 const site = await getSiteSettings();
 const newsletterZiel = site.newsletterUrl || withBase('/newsletter');
+// Externer Anmeldelink öffnet im neuen Tab — wie auf der Newsletter-Seite.
+const newsletterExtern = Boolean(site.newsletterUrl);
 ---
 
 <BaseLayout>
@@ -118,7 +120,12 @@ const newsletterZiel = site.newsletterUrl || withBase('/newsletter');
           <div class="newsletter-band fade-up">
             <p class="script newsletter-headline">{start.newsletter.headline}</p>
             <p class="newsletter-text">{start.newsletter.text}</p>
-            <a class="btn" href={newsletterZiel}>
+            <a
+              class="btn"
+              href={newsletterZiel}
+              target={newsletterExtern ? '_blank' : undefined}
+              rel={newsletterExtern ? 'noopener noreferrer' : undefined}
+            >
               {start.newsletter.buttonText}
             </a>
           </div>

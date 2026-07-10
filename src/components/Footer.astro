@@ -7,7 +7,7 @@ import pkg from '../../package.json';
 
 const site = await getSiteSettings();
 const jahr = new Date().getFullYear();
-const footerText = site.footerText.replace('{jahr}', String(jahr));
+const footerText = site.footerText.replaceAll('{jahr}', String(jahr));
 ---
 
 <footer class="site-footer">
@@ -16,6 +16,7 @@ const footerText = site.footerText.replace('{jahr}', String(jahr));
       <a href={withBase('/impressum')}>Impressum</a>
       <a href={withBase('/datenschutz')}>Datenschutz</a>
       <a href={withBase('/newsletter')}>Newsletter</a>
+      <a href={withBase('/rss.xml')}>RSS</a>
       {
         site.pinterestUrl && (
           <a href={site.pinterestUrl} target="_blank" rel="noopener noreferrer">
