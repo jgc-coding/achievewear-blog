@@ -41,7 +41,9 @@ const ogImageUrl = Astro.site ? new URL(ogBild.src, Astro.site).href : undefined
   ogImage={ogImageUrl}
   ogType="article"
 >
-  <article class="container artikel">
+  {/* Pagefind indexiert NUR Elemente mit data-pagefind-body — so landen genau die
+      Artikeltexte im Suchindex, nicht Impressum, Datenschutz & Co. */}
+  <article class="container artikel" data-pagefind-body>
     <header class="artikel-kopf">
       {
         kategorie && (

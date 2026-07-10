@@ -1,0 +1,68 @@
+---
+// Suchseite: bindet die Pagefind-Oberfläche ein — eine rein statische
+// Volltextsuche ohne externe Requests (DSGVO-konform). Suchindex und UI-Assets
+// unter /pagefind/ entstehen ERST beim Produktions-Build: "npm run build" ruft
+// nach "astro build" die Pagefind-CLI auf. Im Dev-Server (npm run dev) gibt es
+// diese Dateien nicht — dann zeigt die Seite einen freundlichen Hinweis statt
+// einer kaputten Oberfläche.
+import BaseLayout from '../layouts/BaseLayout.astro';
+import SektionsTitel from '../components/SektionsTitel.astro';
+import { withBase } from '../lib/url';
+---
+
+<BaseLayout
+  title="Suche"
+  description="Durchsuche alle Artikel von AchieveWear nach Nähanleitungen, Lauf-Wissen und Geschichten."
+>
+  <div class="container suche-seite">
+    <SektionsTitel text="Suche" script="Finde Anleitungen & Geschichten" />
+    <div id="suche"></div>
+  </div>
+
+  {/* Pagefind-UI-Stil und -Skript. Beide liegen unter /pagefind/ (durch withBase
+      geschickt, damit der Base-Pfad auf GitHub Pages stimmt) und existieren nur
+      nach dem Produktions-Build. Das Skript bleibt is:inline, damit Astro den
+      erst zur Build-Zeit erzeugten Pfad nicht auflösen/bündeln will; onerror
+      merkt sich einen Ladefehler (z. B. im Dev-Server). */}
+  <link rel="stylesheet" href={withBase('/pagefind/pagefind-ui.css')} />
+  <script
+    is:inline
+    src={withBase('/pagefind/pagefind-ui.js')}
+    onerror="window.__pagefindFehler = true"></script>
+
+  <script is:inline define:vars={{ bundlePfad: withBase('/pagefind/') }}>
+    // Startet die Pagefind-Oberfläche, sobald das Dokument bereitsteht. Fehlt das
+    // Pagefind-Skript (Dev-Server oder Ladefehler), erscheint stattdessen ein
+    // deutscher Hinweis im #suche-Container.
+    document.addEventListener('DOMContentLoaded', () => {
+      const behaelter = document.getElementById('suche');
+      if (!behaelter) return;
+      if (window.PagefindUI && !window.__pagefindFehler) {
+        new window.PagefindUI({
+          element: '#suche',
+          bundlePath: bundlePfad,
+          showImages: false,
+          showSubResults: true,
+        });
+      } else {
+        behaelter.innerHTML =
+          '<p class="suche-hinweis">Die Suche steht nur auf der veröffentlichten Website zur Verfügung (im lokalen Entwicklungsmodus wird der Suchindex nicht erzeugt).</p>';
+      }
+    });
+  </script>
+</BaseLayout>
+
+<style>
+  .suche-seite {
+    max-width: 760px;
+    padding-top: clamp(26px, 4vw, 48px);
+  }
+
+  /* Der Hinweis wird per JavaScript in #suche eingefügt und trägt daher nicht
+     Astros Scope-Attribut — deshalb :global(), damit die Regel trotzdem greift. */
+  :global(.suche-hinweis) {
+    text-align: center;
+    color: var(--text-muted);
+    margin: clamp(24px, 4vw, 40px) 0;
+  }
+</style>
