@@ -5,7 +5,6 @@ import { getCollection, render } from 'astro:content';
 import { Image, getImage } from 'astro:assets';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import PostKarte from '../../components/PostKarte.astro';
-import YouTubeConsent from '../../components/YouTubeConsent.astro';
 import { getKategorien, getSiteSettings } from '../../lib/settings';
 import { withBase } from '../../lib/url';
 import { formatDatum, isoDatum } from '../../lib/format';
@@ -116,8 +115,6 @@ const ogImageUrl = Astro.site ? new URL(ogBild.src, Astro.site).href : undefined
       </aside>
     )
   }
-
-  <YouTubeConsent />
 </BaseLayout>
 
 <style>
