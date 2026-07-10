@@ -33,6 +33,10 @@ jobs:
           node-version: 24
           cache: npm
       - run: npm ci
+      # Kaputte Typen oder rote Tests sollen den Deploy stoppen, BEVOR eine kaputte
+      # Website live geht.
+      - run: npm run check
+      - run: npm test
       - run: npm run build
       - uses: actions/upload-pages-artifact@v5
         with:
