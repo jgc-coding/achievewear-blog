@@ -252,15 +252,43 @@ collections:
         label: Farben
         file: src/content/einstellungen/design.yml
         fields:
-          - { name: creme, label: Creme (Seiten-Hintergrund), widget: color }
-          - { name: rosaZart, label: Rosa zart (Willkommen & Zitat), widget: color }
-          - { name: mint, label: Mint (Über mich & Newsletter), widget: color }
-          - { name: salbei, label: Salbei (Knöpfe), widget: color }
-          - { name: anthrazit, label: Anthrazit (Textfarbe), widget: color }
-          - { name: salbeiTief, label: Salbei tief (Überschriften), widget: color }
-          - { name: altrose, label: Altrosé (Rahmen & Linien), widget: color }
-          - { name: altroseDunkel, label: Altrosé dunkel (geschwungene Schrift), widget: color }
-          - { name: weiss, label: Weiß (Bilderrahmen), widget: color }
+          # Muster gespiegelt in hexFarbe() in src/content.config.ts — nur gemeinsam ändern.
+          - name: creme
+            label: Creme (Seiten-Hintergrund)
+            widget: color
+            pattern: ['^#([0-9a-fA-F]{3}|[0-9a-fA-F]{6}|[0-9a-fA-F]{8})$', 'Bitte eine Farbe über den Farbwähler wählen (Format #rrggbb).']
+          - name: rosaZart
+            label: Rosa zart (Willkommen & Zitat)
+            widget: color
+            pattern: ['^#([0-9a-fA-F]{3}|[0-9a-fA-F]{6}|[0-9a-fA-F]{8})$', 'Bitte eine Farbe über den Farbwähler wählen (Format #rrggbb).']
+          - name: mint
+            label: Mint (Über mich & Newsletter)
+            widget: color
+            pattern: ['^#([0-9a-fA-F]{3}|[0-9a-fA-F]{6}|[0-9a-fA-F]{8})$', 'Bitte eine Farbe über den Farbwähler wählen (Format #rrggbb).']
+          - name: salbei
+            label: Salbei (Knöpfe)
+            widget: color
+            pattern: ['^#([0-9a-fA-F]{3}|[0-9a-fA-F]{6}|[0-9a-fA-F]{8})$', 'Bitte eine Farbe über den Farbwähler wählen (Format #rrggbb).']
+          - name: anthrazit
+            label: Anthrazit (Textfarbe)
+            widget: color
+            pattern: ['^#([0-9a-fA-F]{3}|[0-9a-fA-F]{6}|[0-9a-fA-F]{8})$', 'Bitte eine Farbe über den Farbwähler wählen (Format #rrggbb).']
+          - name: salbeiTief
+            label: Salbei tief (Überschriften)
+            widget: color
+            pattern: ['^#([0-9a-fA-F]{3}|[0-9a-fA-F]{6}|[0-9a-fA-F]{8})$', 'Bitte eine Farbe über den Farbwähler wählen (Format #rrggbb).']
+          - name: altrose
+            label: Altrosé (Rahmen & Linien)
+            widget: color
+            pattern: ['^#([0-9a-fA-F]{3}|[0-9a-fA-F]{6}|[0-9a-fA-F]{8})$', 'Bitte eine Farbe über den Farbwähler wählen (Format #rrggbb).']
+          - name: altroseDunkel
+            label: Altrosé dunkel (geschwungene Schrift)
+            widget: color
+            pattern: ['^#([0-9a-fA-F]{3}|[0-9a-fA-F]{6}|[0-9a-fA-F]{8})$', 'Bitte eine Farbe über den Farbwähler wählen (Format #rrggbb).']
+          - name: weiss
+            label: Weiß (Bilderrahmen)
+            widget: color
+            pattern: ['^#([0-9a-fA-F]{3}|[0-9a-fA-F]{6}|[0-9a-fA-F]{8})$', 'Bitte eine Farbe über den Farbwähler wählen (Format #rrggbb).']
 
       # ---------------- Kategorien ----------------
       - name: kategorien
@@ -280,10 +308,15 @@ collections:
               - name: slug
                 label: Technischer Name (nicht ändern!)
                 widget: string
+                # Werte gespiegelt aus KATEGORIE_SLUGS in src/content.config.ts — nur gemeinsam ändern.
+                pattern: ['^(naehen|lauf-welt-verstehen|geschichten)$', 'Bitte nicht ändern — dieser Wert ist fest mit den Artikeln verdrahtet.']
                 hint: >-
                   Fest mit den Artikeln verdrahtet — bitte nur den sichtbaren
                   Namen darüber ändern, nicht diesen Wert.
               - { name: description, label: Beschreibung, widget: text }
-              - { name: color, label: Farbe, widget: color }
+              - name: color
+                label: Farbe
+                widget: color
+                pattern: ['^#([0-9a-fA-F]{3}|[0-9a-fA-F]{6}|[0-9a-fA-F]{8})$', 'Bitte eine Farbe über den Farbwähler wählen (Format #rrggbb).']
               - { name: image, label: Bild, widget: image }
               - { name: imageAlt, label: 'Bild: Beschreibung (Alt-Text)', widget: string }

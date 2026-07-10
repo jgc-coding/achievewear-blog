@@ -22,6 +22,12 @@ const optionalesDatum = () =>
     z.coerce.date().optional()
   );
 
+// Farbwerte landen ungeprüft als CSS-Variablen im <head> jeder Seite (BaseLayout, set:html) —
+// ein kaputter Wert (z. B. Tippfehler im CMS) würde still das gesamte Design zerlegen.
+// Muster gespiegelt im pattern der color-Felder in public/admin/config.yml — nur gemeinsam ändern.
+const hexFarbe = () =>
+  z.string().regex(/^#(?:[0-9a-fA-F]{3}|[0-9a-fA-F]{6}|[0-9a-fA-F]{8})$/, 'Farbwert muss ein Hex-Code wie #aabbcc sein');
+
 const blog = defineCollection({
   loader: glob({ pattern: '**/*.md', base: './src/content/blog' }),
   schema: ({ image }) =>
@@ -107,15 +113,15 @@ const startseite = defineCollection({
 const design = defineCollection({
   loader: glob({ pattern: 'design.yml', base: './src/content/einstellungen' }),
   schema: z.object({
-    creme: z.string(),
-    rosaZart: z.string(),
-    mint: z.string(),
-    salbei: z.string(),
-    anthrazit: z.string(),
-    salbeiTief: z.string(),
-    altrose: z.string(),
-    altroseDunkel: z.string(),
-    weiss: z.string(),
+    creme: hexFarbe(),
+    rosaZart: hexFarbe(),
+    mint: hexFarbe(),
+    salbei: hexFarbe(),
+    anthrazit: hexFarbe(),
+    salbeiTief: hexFarbe(),
+    altrose: hexFarbe(),
+    altroseDunkel: hexFarbe(),
+    weiss: hexFarbe(),
   }),
 });
 
@@ -129,7 +135,7 @@ const kategorien = defineCollection({
             name: z.string(),
             slug: z.enum(KATEGORIE_SLUGS),
             description: z.string(),
-            color: z.string(),
+            color: hexFarbe(),
             image: relImage(image),
             imageAlt: z.string(),
           })
