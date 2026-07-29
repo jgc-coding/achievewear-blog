@@ -17,7 +17,9 @@ Nutzerin des Backends ist eine Nicht-Technikerin — **alles Sichtbare deutsch u
 ```powershell
 npm run dev        # Dev-Server http://localhost:4321
 npm run build      # Produktions-Build nach dist/ (Base "/") inkl. Pagefind-Suchindex
+npm run build:varianten  # dist/ PLUS die Design-Varianten nach dist/varianten/v1|v2|v3
 npm run preview    # dist/ lokal ansehen
+$env:VARIANT='v2'; npm run dev   # eine Variante im Dev-Server; danach Remove-Item Env:VARIANT
 npm run check      # Astro/TypeScript-Prüfung
 npm test           # Vitest (31 Tests: URL-Helfer, Datumsformat, remark-Plugins)
 
@@ -34,6 +36,7 @@ Remove-Item Env:BASE_PATH; Remove-Item Env:SITE_URL
 - `src/content/` — alle Inhalte (Markdown + YAML). **Bilder liegen entry-relativ in `bilder/`-Unterordnern**, damit Astro sie optimiert und der Base-Pfad egal ist
 - `src/lib/url.ts` — `withBase()` / `absUrl()`: die EINZIGE Stelle für Pfad-Präfixe
 - `src/lib/settings.ts` — typisierte Helper für die Einstellungs-Collections
+- `src/lib/variante.ts` + `public/varianten/*.css` + `scripts/varianten-bauen.mjs` — Design-Varianten zum Aussuchen (Details: `docs/design-varianten.md`). Ohne gesetzte Umgebungsvariable `VARIANT` entsteht die normale Website
 - `public/admin/config.yml` — Sveltia-Konfiguration (deutsche Labels/Hints)
 - `src/pages/admin/index.astro` — Redaktionsbereich (bundelt `@sveltia/cms` lokal)
 - `src/pages/suche.astro` — Pagefind-Suche (Index nur über Artikel via `data-pagefind-body`; Assets erst nach Build vorhanden)
@@ -63,4 +66,5 @@ Remove-Item Env:BASE_PATH; Remove-Item Env:SITE_URL
 - Lokaler CMS-Test: „Work with Local Repository" nur in Chrome/Edge; macht KEINE git-Commits.
 - `import.meta.env.BASE_URL` hat je nach Konfiguration mal einen Trailing-Slash, mal nicht — deshalb immer über `withBase()` gehen.
 - **Styles, die mehrere Routen teilen, gehören nach `global.css`:** Astro legt Seiten-`<style>` (auch `is:global`) nur in die eigene Route. Die Kategorie-Seiten nutzten Klassen aus dem Blog-Index-Style und waren dadurch live ungestylt (in v0.2.0 behoben).
+- **Astro hängt seine gebündelten Stylesheets HINTER selbst eingebundene `<link>`s aus `public/`.** Eine dort definierte `:root`-Farbe verliert deshalb gegen `global.css`. Und Astros Komponenten-Styles bekommen pro Element ein `data-astro-cid`-Attribut, `.a .b` wird also zu `.a[cid] .b[cid]` — ein Klassen-Selektor überschreibt das nicht. Beides löst ein ID-Präfix (`#variante ...`), das unabhängig von der Reihenfolge gewinnt.
 - **Astro rastert importierte SVGs nicht zu PNG** (`getImage` mit `format: 'png'` wird bei SVG-Quellen still ignoriert) — deshalb liegt das og-Standard-Bild als eingechecktes PNG neben seiner SVG-Quelle.

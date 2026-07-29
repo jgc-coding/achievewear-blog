@@ -1,0 +1,19 @@
+/* ============================================================
+   Anzeige-Schrift der Design-Varianten: Archivo Black
+   ------------------------------------------------------------
+   Selbst gehostet, keine Anfrage an Google Fonts (DSGVO).
+   Quelle: npm-Paket @fontsource/archivo-black (devDependency),
+   die woff2-Datei liegt daneben in schriften/ und ist im Repo.
+   Lizenz: SIL Open Font License — schriften/LICENSE-ArchivoBlack.txt
+
+   Der Latin-Zeichensatz deckt Deutsch inklusive ä ö ü ß ab; auf
+   den latin-ext-Schnitt wird bewusst verzichtet (unnötige Last).
+   ============================================================ */
+
+@font-face {
+  font-family: 'Archivo Black';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('schriften/archivo-black-latin-400-normal.woff2') format('woff2');
+}

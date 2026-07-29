@@ -9,6 +9,7 @@ import PolaroidBild from '../components/PolaroidBild.astro';
 import { Image } from 'astro:assets';
 import { getStartseite, getKategorien, getSiteSettings } from '../lib/settings';
 import { withBase, linkUrl } from '../lib/url';
+import { VARIANTE } from '../lib/variante';
 
 const start = await getStartseite();
 const kategorien = await getKategorien();
@@ -16,31 +17,71 @@ const site = await getSiteSettings();
 const newsletterZiel = site.newsletterUrl || withBase('/newsletter');
 // Externer Anmeldelink öffnet im neuen Tab — wie auf der Newsletter-Seite.
 const newsletterExtern = Boolean(site.newsletterUrl);
+
+// Laufband-Text der Variante "Bold" — aus den echten Kategorienamen, nicht erfunden.
+const laufband = `${kategorien.map((eintrag) => eintrag.name).join(' · ')} · `;
 ---
 
 <BaseLayout>
-  <!-- ===== Welcome ===== -->
-  <section class="welcome">
-    <div class="container">
-      <div class="welcome-band fade-up">
-        <div class="welcome-bild">
-          <PolaroidBild
-            src={start.welcome.image}
-            alt={start.welcome.imageAlt}
-            variant="polaroid"
-            loading="eager"
-          />
+  {
+    /* ===== Welcome =====
+       Die Variante "Bold" (v3) bekommt einen eigenen, plakativen Auftakt.
+       Ohne gesetzte Variante entsteht exakt das bisherige HTML. */
+    VARIANTE === 'v3' ? (
+      <section class="hero-statement">
+        <div class="container hero-statement__inner fade-up">
+          <p class="hero-statement__kicker">{site.tagline}</p>
+          <h1 class="hero-statement__titel">
+            <span class="hero-statement__zeile1">{start.welcome.headline}</span>
+            <span class="hero-statement__zeile2">{start.welcome.scriptLine}</span>
+          </h1>
+          <div class="hero-statement__bild">
+            <Image
+              src={start.welcome.image}
+              alt={start.welcome.imageAlt}
+              widths={[520, 1040]}
+              sizes="(max-width: 780px) 92vw, 620px"
+              loading="eager"
+            />
+          </div>
+          <div class="hero-statement__text">
+            <p>{start.welcome.text}</p>
+            <a class="btn" href={linkUrl(start.welcome.buttonUrl)}>
+              {start.welcome.buttonText}
+            </a>
+          </div>
         </div>
-        <div class="welcome-text">
-          <h1 class="welcome-headline">{start.welcome.headline}</h1>
-          <p class="script welcome-script">{start.welcome.scriptLine}</p>
-          <span class="mini-linie" aria-hidden="true"></span>
-          <p class="welcome-copy">{start.welcome.text}</p>
-          <a class="btn" href={linkUrl(start.welcome.buttonUrl)}>{start.welcome.buttonText}</a>
+        <div class="hero-statement__laufband" aria-hidden="true">
+          <span>{laufband.repeat(3)}</span>
+          <span>{laufband.repeat(3)}</span>
         </div>
-      </div>
-    </div>
-  </section>
+      </section>
+    ) : (
+      <section class="welcome">
+        <div class="container">
+          <div class="welcome-band fade-up">
+            <div class="welcome-bild">
+              <PolaroidBild
+                src={start.welcome.image}
+                alt={start.welcome.imageAlt}
+                variant="polaroid"
+                loading="eager"
+              />
+            </div>
+            <div class="welcome-text">
+              <h1 class="welcome-headline">{start.welcome.headline}</h1>
+              <p class="script welcome-script">{start.welcome.scriptLine}</p>
+              <span class="mini-linie" aria-hidden="true"></span>
+              <p class="welcome-copy">{start.welcome.text}</p>
+              <a class="btn" href={linkUrl(start.welcome.buttonUrl)}>
+                {start.welcome.buttonText}
+              </a>
+            </div>
+          </div>
+        </div>
+      </section>
+    )
+  }
 
   <!-- ===== Über mich ===== -->
   <section class="about">

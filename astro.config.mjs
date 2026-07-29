@@ -10,10 +10,14 @@ import remarkYoutube from './src/plugins/remark-youtube.mjs';
 // - All-Inkl:     SITE_URL=https://achievewear.de        BASE_PATH=/
 const SITE_URL = process.env.SITE_URL ?? 'http://localhost:4321';
 const BASE_PATH = process.env.BASE_PATH ?? '/';
+// Zielordner: normal "dist". Die Design-Varianten bauen in Unterordner davon
+// (siehe scripts/varianten-bauen.mjs) und setzen dafür OUT_DIR.
+const OUT_DIR = process.env.OUT_DIR ?? './dist';
 
 export default defineConfig({
   site: SITE_URL,
   base: BASE_PATH,
+  outDir: OUT_DIR,
   trailingSlash: 'ignore',
   integrations: [
     sitemap({

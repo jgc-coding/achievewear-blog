@@ -3,6 +3,21 @@
 Alle nennenswerten Änderungen an diesem Projekt werden hier dokumentiert.
 Format angelehnt an [Keep a Changelog](https://keepachangelog.com/de/), Versionierung nach [SemVer](https://semver.org/lang/de/).
 
+## [0.3.0] — 2026-07-29
+
+Drei Design-Varianten zum Aussuchen — kräftiger, kühler, weniger verspielt. Die bestehende Website bleibt unverändert live und dient als Vergleichsmaßstab.
+
+### Hinzugefügt
+- **Drei Entwurfs-Varianten** unter `/varianten/v1|v2|v3` plus Übersichtsseite unter `/varianten/`, mit unterschiedlich starkem Abstand zum heutigen Stand: V1 „Frisch" (leicht), V2 „Kraft" (mittel), V3 „Bold" (stark). Gleicher Inhalt, nur andere Optik; alle mit `noindex`.
+- **Archivo Black** als Überschriften-Schrift der Varianten (selbst gehostet aus `@fontsource/archivo-black`, SIL Open Font License) — die kräftige Groteske aus der Vorlage.
+- **Umschalt-Leiste** am unteren Rand jeder Varianten-Seite: springt direkt zwischen den Varianten und zurück zur aktuellen Website (auch auf dem Handy).
+- **Varianten-Build** `npm run build:varianten` (`scripts/varianten-bauen.mjs`): baut die echte Website plus alle Varianten in ein Paket; der Deploy nutzt ihn.
+- `docs/design-varianten.md` — was die Varianten unterscheidet, wie man sie lokal baut und wie man sie nach der Entscheidung wieder entfernt.
+
+### Geändert
+- `astro.config.mjs` kennt `OUT_DIR` (Zielordner aus der Umgebung) — nötig, damit die Varianten in Unterordner von `dist/` bauen.
+- GitHub-Action baut mit `npm run build:varianten` statt `npm run build`. Die echte Website entsteht dabei aus demselben Ablauf wie vorher.
+
 ## [0.2.0] — 2026-07-10
 
 Qualitätspaket nach Projekt-Analyse: zwei Live-Bugs behoben, CMS gegen Fehleingaben abgesichert, Suche + Teilen-Bilder + Testfundament ergänzt.
