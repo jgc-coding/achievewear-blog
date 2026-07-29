@@ -8,8 +8,15 @@
 // gesetzt, entsteht ausgabeseitig kein einziges zusätzliches Zeichen — die
 // bestehende Website bleibt unangetastet.
 
-export const VARIANTEN = ['v1', 'v2', 'v3'] as const;
+export const VARIANTEN = ['v4', 'v5', 'v6'] as const;
 export type Variante = (typeof VARIANTEN)[number];
+
+/**
+ * Diese Variante bekommt auf der Startseite einen eigenen Auftakt statt des
+ * bestehenden Willkommens-Bandes (siehe src/pages/index.astro). Nur hier
+ * festgelegt, damit Markup und Aussehen nicht auseinanderlaufen.
+ */
+export const EIGENER_AUFTAKT: Variante = 'v6';
 
 const roh = (process.env.VARIANT ?? '').trim();
 
@@ -24,17 +31,20 @@ export const VARIANTE: Variante | '' = roh as Variante | '';
 
 /** Anzeigenamen für die Umschalt-Leiste und die Übersichtsseite. */
 export const VARIANTEN_INFO: Record<Variante, { name: string; beschreibung: string }> = {
-  v1: {
-    name: 'Frisch',
-    beschreibung: 'Gleicher Aufbau, kräftige Schrift, Limette als Signalfarbe.',
+  v4: {
+    name: 'Schnittmuster',
+    beschreibung:
+      'Papierton, Schneiderkreide und Rotstift. Gestrichelte Zuschneidelinien um jedes Bild, Heftstich statt Zierlinie.',
   },
-  v2: {
-    name: 'Kraft',
-    beschreibung: 'Dunkle Bänder, großer Auftritt, klare Kanten statt Rahmen.',
+  v5: {
+    name: 'Tempo',
+    beschreibung:
+      'Renntag: linksbündig, dicke Signalbalken als Startlinie, Versalien in schwerer Groteske, Zahlen wie Zwischenzeiten.',
   },
-  v3: {
-    name: 'Bold',
-    beschreibung: 'Dunkles Magazin-Layout, Artikel als Index-Liste, voller Kontrast.',
+  v6: {
+    name: 'Stoffbahn',
+    beschreibung:
+      'Große satte Farbfelder mit Zackenschnitt-Kante. Das Bild schiebt sich über die Kante, das Artikel-Raster liegt versetzt.',
   },
 };
 

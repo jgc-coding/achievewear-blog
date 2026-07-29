@@ -1,19 +1,43 @@
 /* ============================================================
-   Anzeige-Schrift der Design-Varianten: Archivo Black
+   Anzeige-Schriften der Design-Varianten
    ------------------------------------------------------------
-   Selbst gehostet, keine Anfrage an Google Fonts (DSGVO).
-   Quelle: npm-Paket @fontsource/archivo-black (devDependency),
-   die woff2-Datei liegt daneben in schriften/ und ist im Repo.
-   Lizenz: SIL Open Font License — schriften/LICENSE-ArchivoBlack.txt
+   Alle selbst gehostet, keine Anfrage an Google Fonts (DSGVO).
+   Quelle: die npm-Pakete unten (devDependencies); die woff2-Dateien
+   liegen als Kopie in schriften/ und sind mit im Repo, damit kein
+   Build von einem Paket abhängt. Lizenzen daneben (SIL OFL).
 
-   Der Latin-Zeichensatz deckt Deutsch inklusive ä ö ü ß ab; auf
-   den latin-ext-Schnitt wird bewusst verzichtet (unnötige Last).
+   Der Latin-Zeichensatz deckt Deutsch inklusive ä ö ü ß ab.
    ============================================================ */
 
+/* V4 „Schnittmuster" — @fontsource-variable/fraunces
+   Warme Serife mit Eigensinn. Über die Achsen einstellbar:
+   opsz (optische Größe), SOFT (weichere Kanten), WONK (schräge,
+   handgemacht wirkende Formen). Genau dieser Eigensinn unterscheidet
+   sie von der üblichen Kontrast-Serife. */
+@font-face {
+  font-family: 'Fraunces Variable';
+  font-style: normal;
+  font-weight: 100 900;
+  font-display: swap;
+  src: url('schriften/fraunces-latin-full-normal.woff2') format('woff2-variations');
+}
+
+/* V5 „Tempo" — @fontsource/archivo-black
+   Schwere Groteske, wie auf Startnummern und Streckenschildern. */
 @font-face {
   font-family: 'Archivo Black';
   font-style: normal;
   font-weight: 400;
   font-display: swap;
   src: url('schriften/archivo-black-latin-400-normal.woff2') format('woff2');
+}
+
+/* V6 „Stoffbahn" — @fontsource-variable/bricolage-grotesque
+   Groteske mit unruhigen Details — freundlich und laut zugleich. */
+@font-face {
+  font-family: 'Bricolage Grotesque Variable';
+  font-style: normal;
+  font-weight: 200 800;
+  font-display: swap;
+  src: url('schriften/bricolage-grotesque-latin-wght-normal.woff2') format('woff2-variations');
 }

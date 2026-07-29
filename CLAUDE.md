@@ -17,9 +17,9 @@ Nutzerin des Backends ist eine Nicht-Technikerin — **alles Sichtbare deutsch u
 ```powershell
 npm run dev        # Dev-Server http://localhost:4321
 npm run build      # Produktions-Build nach dist/ (Base "/") inkl. Pagefind-Suchindex
-npm run build:varianten  # dist/ PLUS die Design-Varianten nach dist/varianten/v1|v2|v3
+npm run build:varianten  # dist/ PLUS die Design-Varianten nach dist/varianten/v4|v5|v6
 npm run preview    # dist/ lokal ansehen
-$env:VARIANT='v2'; npm run dev   # eine Variante im Dev-Server; danach Remove-Item Env:VARIANT
+$env:VARIANT='v5'; npm run dev   # eine Variante im Dev-Server; danach Remove-Item Env:VARIANT
 npm run check      # Astro/TypeScript-Prüfung
 npm test           # Vitest (31 Tests: URL-Helfer, Datumsformat, remark-Plugins)
 

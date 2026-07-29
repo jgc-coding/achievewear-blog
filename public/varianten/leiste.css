@@ -3,13 +3,14 @@
    ------------------------------------------------------------
    Schwebt unten auf jeder Varianten-Seite und führt zurück zur
    aktuellen Website. Nur in Varianten-Builds im HTML enthalten.
-   Bewusst mit eigenen, festen Farben — damit die Leiste in jeder
-   Variante gleich aussieht und nicht von deren Palette abhängt.
+   Bewusst mit eigenen, festen Farben und bewusst neutral gehalten:
+   Sie ist Werkzeug, nicht Teil des Entwurfs, und muss auf allen
+   drei Varianten gleich gut lesbar sein.
    ============================================================ */
 
 #variante {
   /* Platz, damit die schwebende Leiste nichts verdeckt */
-  padding-bottom: 84px;
+  padding-bottom: 88px;
 }
 
 .varianten-leiste {
@@ -20,17 +21,16 @@
   transform: translateX(-50%);
   display: flex;
   align-items: center;
-  gap: 4px;
+  gap: 3px;
   max-width: calc(100vw - 16px);
   overflow-x: auto;
   scrollbar-width: none;
-  padding: 6px;
+  padding: 5px;
   border-radius: 999px;
-  background: rgba(14, 15, 10, 0.94);
-  box-shadow: 0 12px 34px rgba(0, 0, 0, 0.34);
+  background: #fffdf8;
+  border: 1px solid rgba(44, 36, 30, 0.12);
+  box-shadow: 0 10px 30px rgba(44, 36, 30, 0.16);
   font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
-  -webkit-backdrop-filter: blur(10px);
-  backdrop-filter: blur(10px);
 }
 
 .varianten-leiste::-webkit-scrollbar {
@@ -39,13 +39,13 @@
 
 .varianten-leiste__titel {
   flex: none;
-  padding-left: 12px;
-  padding-right: 4px;
+  padding-left: 13px;
+  padding-right: 5px;
   font-size: 10px;
-  font-weight: 600;
+  font-weight: 700;
   letter-spacing: 0.2em;
   text-transform: uppercase;
-  color: rgba(244, 241, 232, 0.5);
+  color: rgba(44, 36, 30, 0.45);
 }
 
 .varianten-leiste a {
@@ -53,28 +53,28 @@
   padding: 8px 13px;
   border-radius: 999px;
   font-size: 11.5px;
-  font-weight: 600;
-  letter-spacing: 0.09em;
+  font-weight: 700;
+  letter-spacing: 0.08em;
   text-transform: uppercase;
   text-decoration: none;
   white-space: nowrap;
-  color: #f4f1e8;
+  color: #2c241e;
   transition: background 0.2s ease, color 0.2s ease;
 }
 
 .varianten-leiste a:hover {
-  background: rgba(255, 255, 255, 0.14);
+  background: rgba(44, 36, 30, 0.08);
 }
 
 .varianten-leiste a.aktiv {
-  background: #dcfb4f;
-  color: #14150f;
+  background: #2c241e;
+  color: #fffdf8;
 }
 
 .varianten-leiste__lang {
-  opacity: 0.65;
-  font-weight: 400;
-  letter-spacing: 0.04em;
+  opacity: 0.6;
+  font-weight: 500;
+  letter-spacing: 0.03em;
   text-transform: none;
 }
 
@@ -82,7 +82,7 @@
   opacity: 0.75;
 }
 
-@media (max-width: 560px) {
+@media (max-width: 620px) {
   .varianten-leiste__titel,
   .varianten-leiste__lang {
     display: none;

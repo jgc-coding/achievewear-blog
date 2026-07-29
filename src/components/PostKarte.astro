@@ -26,7 +26,9 @@ const { post, kategorieName, kategorieFarbe } = Astro.props;
       />
     </span>
     <span class="karte-meta">
-      <span class="karte-kategorie" style={`color:${kategorieFarbe}`}>{kategorieName}</span>
+      <span class="karte-kategorie" style={`--kategorie-farbe:${kategorieFarbe}`}>
+        {kategorieName}
+      </span>
       <span class="karte-punkt" aria-hidden="true">·</span>
       <time datetime={isoDatum(post.data.date)}>{formatDatum(post.data.date)}</time>
     </span>
@@ -77,6 +79,12 @@ const { post, kategorieName, kategorieFarbe } = Astro.props;
     letter-spacing: 0.16em;
     text-transform: uppercase;
     color: var(--text-muted);
+  }
+
+  /* Kategorie-Farbe kommt als CSS-Variable statt als direkte Farbe aus dem
+     style-Attribut — so bleibt sie überschreibbar (Inline-Farben sind es nicht). */
+  .karte-kategorie {
+    color: var(--kategorie-farbe);
   }
 
   .karte-punkt {

@@ -3,6 +3,20 @@
 Alle nennenswerten Änderungen an diesem Projekt werden hier dokumentiert.
 Format angelehnt an [Keep a Changelog](https://keepachangelog.com/de/), Versionierung nach [SemVer](https://semver.org/lang/de/).
 
+## [0.4.0] — 2026-07-29
+
+Zweiter Anlauf bei den Design-Varianten: Die erste Runde (dunkel, Neon-Akzent) gefiel nicht. Drei neue Entwürfe, alle hell, in der warmen Farbwelt der Website — kräftig durch Fläche, Größe und Ausrichtung statt durch Dunkelheit.
+
+### Geändert
+- **Varianten ersetzt:** `v1|v2|v3` entfernt, dafür `v4` „Schnittmuster" (leicht), `v5` „Tempo" (mittel), `v6` „Stoffbahn" (stark). Neue Kennungen statt Wiederverwendung, damit ein alter Link nicht plötzlich etwas anderes zeigt.
+- Die Bildsprache kommt aus Lisas eigener Welt statt aus dem allgemeinen Design-Baukasten: Zuschneidelinien und Heftstich (V4), Startlinie und Zwischenzeiten-Ziffern (V5), Zackenschnitt-Kante an den Farbbahnen (V6).
+- Übersichtsseite und Umschalt-Leiste jetzt hell, die Übersicht zeigt je Variante Farbfelder und Schriftname.
+- Kategorie-Farbe in `PostKarte.astro` kommt als CSS-Variable statt als direkte Farbe im style-Attribut — Inline-Farben lassen sich sonst nicht überschreiben. Die Darstellung bleibt gleich.
+
+### Hinzugefügt
+- Zwei weitere selbst gehostete Anzeigeschriften (SIL Open Font License): **Fraunces** (V4) und **Bricolage Grotesque** (V6); **Archivo Black** bleibt für V5.
+- Alle Text-auf-Farbfeld-Kombinationen auf den Mindestkontrast 4,5:1 geprüft; zwei gedämpfte Textfarben dafür bewusst tiefer gesetzt.
+
 ## [0.3.0] — 2026-07-29
 
 Drei Design-Varianten zum Aussuchen — kräftiger, kühler, weniger verspielt. Die bestehende Website bleibt unverändert live und dient als Vergleichsmaßstab.

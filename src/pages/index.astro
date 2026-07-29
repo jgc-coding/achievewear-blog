@@ -9,7 +9,7 @@ import PolaroidBild from '../components/PolaroidBild.astro';
 import { Image } from 'astro:assets';
 import { getStartseite, getKategorien, getSiteSettings } from '../lib/settings';
 import { withBase, linkUrl } from '../lib/url';
-import { VARIANTE } from '../lib/variante';
+import { VARIANTE, EIGENER_AUFTAKT } from '../lib/variante';
 
 const start = await getStartseite();
 const kategorien = await getKategorien();
@@ -25,9 +25,10 @@ const laufband = `${kategorien.map((eintrag) => eintrag.name).join(' · ')} · `
 <BaseLayout>
   {
     /* ===== Welcome =====
-       Die Variante "Bold" (v3) bekommt einen eigenen, plakativen Auftakt.
-       Ohne gesetzte Variante entsteht exakt das bisherige HTML. */
-    VARIANTE === 'v3' ? (
+       Eine Variante bekommt einen eigenen, plakativen Auftakt (welche, steht
+       in src/lib/variante.ts). Ohne gesetzte Variante entsteht exakt das
+       bisherige HTML. */
+    VARIANTE === EIGENER_AUFTAKT ? (
       <section class="hero-statement">
         <div class="container hero-statement__inner fade-up">
           <p class="hero-statement__kicker">{site.tagline}</p>
