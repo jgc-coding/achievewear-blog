@@ -1,21 +1,20 @@
 # weitermachen.md — AchieveWear-Blog
 
-## Stand (2026-11-23, v0.5.0)
+## Stand (2026-11-23, v0.5.1)
 - **Neues Aussehen nach Lisas Vorlage** (Blog „Make it Yours", vor allem die Handy-Ansicht) in Lisas CI-Farben und -Schriften — live: https://jgc-coding.github.io/achievewear-blog/ (noindex weiter aktiv). Details: CHANGELOG 0.5.0.
+- v0.5.1: Vorschaubild beim Teilen kommt jetzt aus dem Titelbild der Startseite bzw. des Artikels (1200×630 JPEG, `src/lib/teilen.ts`), alte Pastell-Illustration entfernt.
 - Design-Varianten V4–V6 entfernt; Rückkehrpunkt davor ist Tag `v0.4.0` (jetzt auch auf GitHub).
 - Geprüft: Typprüfung, 34 Tests, Build mit und ohne Base-Pfad, GitHub-Deploy grün; Optik am nachgebildeten Handy (412 px) und Desktop (1280 px) angesehen, alle Seiten ohne Überbreite, Suche findet Artikel.
 - Repo: https://github.com/jgc-coding/achievewear-blog · Doku: docs/anleitung-fuer-lisa.md (Farben/Startseite/Bilder nachgezogen)
 
 ## Aktuelle Stolperfallen
 - **Alle Fotos sind KI-Platzhalter** (über Gabriels ChatGPT erzeugt, 23.11.). Originale liegen in `C:\Users\chime\Downloads\aw-*.png`; dort auch vier ungenutzte Reservebilder: `aw-raster4.png` Feld unten rechts (Notizbuch, Medaille, Tee) und `aw-raster6.png` Felder oben Mitte (Trail-Schuhe), unten links (Nähmaschinen-Nadel), unten rechts (Armsleeves mit Startnummer). Zerschneiden: Skript-Idee in Memory „chatgpt-bilder-ueber-chrome".
-- Das Standard-Teilen-Bild (`src/assets/og-standard.svg|png`) ist noch die alte Pastell-Illustration — passt nicht mehr zum neuen Stil.
 - Alte Vorschau-Adressen `/varianten/…` gibt es nicht mehr (404). Falls Lisa noch Lesezeichen darauf hat: neue Startseite schicken.
 
 ## Nächste Schritte (Claude)
 1. Lisas Rückmeldung zu v0.5.0 einarbeiten (Farben, Texte, Feinschliff).
-2. Standard-Teilen-Bild auf den neuen Stil umstellen (z. B. aus dem Titelbild 1200×630 ableiten; PNG neu rastern, Befehl im BaseLayout-Kommentar).
-3. Optional: Pinterest-taugliche Teilen-Bilder, Freebie-Download-Seite.
-4. Zum Launch: Umzug auf All-Inkl nach docs/hosting-phase2-allinkl.md + noindex aus + Impressum/Datenschutz final.
+2. Optional: Pinterest-taugliche Teilen-Bilder (Hochformat 2:3), Freebie-Download-Seite.
+3. Zum Launch: Umzug auf All-Inkl nach docs/hosting-phase2-allinkl.md + noindex aus + Impressum/Datenschutz final.
 
 ## Offen
 - Nichts angefangen und liegen geblieben.

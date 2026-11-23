@@ -98,7 +98,7 @@ collections:
       - name: cover
         label: Titelbild
         widget: image
-        hint: Erscheint oben im Artikel und auf der Karte in der Blog-Übersicht.
+        hint: Erscheint oben im Artikel, auf der Karte in der Blog-Übersicht und als Vorschaubild, wenn jemand den Artikel teilt. Am besten ein Foto im Querformat.
       - name: coverAlt
         label: 'Titelbild: Beschreibung (Alt-Text)'
         widget: string
@@ -213,7 +213,7 @@ collections:
               - { name: text, label: Text, widget: text }
               - { name: buttonText, label: 'Knopf: Beschriftung', widget: string }
               - { name: buttonUrl, label: 'Knopf: Ziel', widget: string, hint: 'z. B. /ueber-mich oder /blog' }
-              - { name: image, label: 'Großes Titelbild ganz oben', widget: image, hint: 'Am besten ein helles Querformat-Foto mit ruhiger Mitte — dort steht der Blog-Name.' }
+              - { name: image, label: 'Großes Titelbild ganz oben', widget: image, hint: 'Am besten ein helles Querformat-Foto mit ruhiger Mitte — dort steht der Blog-Name. Es ist auch das Vorschaubild, wenn jemand die Website teilt.' }
               - { name: imageAlt, label: 'Titelbild: Beschreibung (Alt-Text)', widget: string }
               - { name: heroLine, label: 'Kursive Zeile im Titelbild', widget: string, required: false, hint: 'Steht unten links im Titelbild, z. B. „In deinem Tempo. Schritt für Schritt.“' }
           - name: about

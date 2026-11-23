@@ -3,7 +3,7 @@
 // Seite — Kategorie, Titel, kurze Linie, Meta-Zeile, Titelbild, Text, Signatur,
 // Schlagwörter. Darunter der Über-mich-Kasten und "Mehr aus …".
 import { getCollection, render } from 'astro:content';
-import { Image, getImage } from 'astro:assets';
+import { Image } from 'astro:assets';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import PostKarte from '../../components/PostKarte.astro';
 import SektionsTitel from '../../components/SektionsTitel.astro';
@@ -11,6 +11,7 @@ import UeberMichKasten from '../../components/UeberMichKasten.astro';
 import { getKategorien, getSiteSettings } from '../../lib/settings';
 import { withBase } from '../../lib/url';
 import { formatDatum, isoDatum } from '../../lib/format';
+import { teilenBildUrl } from '../../lib/teilen';
 
 export async function getStaticPaths() {
   const posts = await getCollection('blog', ({ data }) => !data.draft);
@@ -33,9 +34,8 @@ const verwandte = (
   .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf())
   .slice(0, 2);
 
-// Open-Graph-Bild (absolute URL; der Asset-Pfad enthält den Base-Pfad bereits)
-const ogBild = await getImage({ src: post.data.cover, width: 1200 });
-const ogImageUrl = Astro.site ? new URL(ogBild.src, Astro.site).href : undefined;
+// Teilen-Bild aus dem Titelbild des Artikels (1200×630, JPEG — siehe lib/teilen.ts)
+const ogImageUrl = await teilenBildUrl(post.data.cover, Astro.site);
 ---
 
 <BaseLayout

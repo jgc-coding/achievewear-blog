@@ -9,17 +9,12 @@ import '@fontsource/cormorant-garamond/500-italic.css';
 // Great Vibes nur für das Logo ("wear") — Teil von Lisas CI, sonst keine Schreibschrift.
 import '@fontsource/great-vibes/400.css';
 import '../styles/global.css';
-import { getImage } from 'astro:assets';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import YouTubeConsent from '../components/YouTubeConsent.astro';
-import { getSiteSettings, getDesign } from '../lib/settings';
+import { getSiteSettings, getDesign, getStartseite } from '../lib/settings';
 import { withBase } from '../lib/url';
-// Standard-Teilen-Bild. Design-Quelle ist og-standard.svg — Astros Bild-Service
-// rastert importierte SVGs nicht zu PNG, deshalb liegt das gerasterte PNG mit im
-// Repo. Nach einer Änderung am SVG das PNG neu rastern (im Projekt-Root):
-// node -e "require('sharp')('src/assets/og-standard.svg').resize(1200,630).png().toFile('src/assets/og-standard.png').then(i => console.log(i.width + 'x' + i.height))"
-import ogStandardPng from '../assets/og-standard.png';
+import { teilenBildUrl } from '../lib/teilen';
 
 interface Props {
   title?: string;
@@ -36,13 +31,10 @@ const fullTitle = title ? `${title} · ${site.title}` : `${site.title} — ${sit
 const metaDescription = description ?? site.description;
 const canonical = Astro.site ? new URL(Astro.url.pathname, Astro.site).href : undefined;
 
-// Fallback-Teilen-Bild für alle Seiten ohne eigenes: Standard-PNG durch die
-// Bild-Pipeline schicken (format explizit, sonst würde Astro zu WebP wandeln —
-// og:image braucht das breit unterstützte PNG) und wie in blog/[slug].astro
-// absolut machen. Setzt eine Seite die ogImage-Prop, hat diese Vorrang.
-const ogStandardBild = await getImage({ src: ogStandardPng, width: 1200, format: 'png' });
-const ogImageFallback = Astro.site ? new URL(ogStandardBild.src, Astro.site).href : undefined;
-const ogImageFinal = ogImage ?? ogImageFallback;
+// Teilen-Bild für alle Seiten ohne eigenes: das große Titelbild der Startseite
+// (zugeschnitten in src/lib/teilen.ts). Setzt eine Seite die ogImage-Prop
+// (Artikel: ihr Titelbild), hat diese Vorrang.
+const ogImageFinal = ogImage ?? (await teilenBildUrl((await getStartseite()).welcome.image, Astro.site));
 
 // Farbpalette aus design.yml als CSS-Variablen (Lisa kann sie im CMS ändern)
 const cssVars =

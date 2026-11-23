@@ -3,6 +3,14 @@
 Alle nennenswerten Änderungen an diesem Projekt werden hier dokumentiert.
 Format angelehnt an [Keep a Changelog](https://keepachangelog.com/de/), Versionierung nach [SemVer](https://semver.org/lang/de/).
 
+## [0.5.1] — 2026-11-23
+
+### Geändert
+- **Vorschaubild beim Teilen** (WhatsApp, Pinterest, Facebook) im neuen Stil: Startseite und alle festen Seiten zeigen das große Titelbild, Artikel ihr eigenes Titelbild — jeweils 1200 × 630, mittig zugeschnitten. Tauscht Lisa ein Foto im Redaktionsbereich, folgt das Teilen-Bild automatisch. Die alte Pastell-Illustration ist entfernt.
+
+### Behoben
+- Geteilte Artikel lieferten ihr Vorschaubild als WebP, das nicht jeder Messenger anzeigt — jetzt JPEG.
+
 ## [0.5.0] — 2026-11-23
 
 Neues Aussehen nach Lisas Vorlage (der Blog „Make it Yours", vor allem die Handy-Ansicht) — in Lisas eigenen Farben und Schriften. Die Design-Varianten V4–V6 sind damit erledigt und entfernt.

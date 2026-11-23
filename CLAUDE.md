@@ -41,7 +41,7 @@ Remove-Item Env:BASE_PATH; Remove-Item Env:SITE_URL
 - `public/admin/config.yml` — Sveltia-Konfiguration (deutsche Labels/Hints)
 - `src/pages/admin/index.astro` — Redaktionsbereich (bundelt `@sveltia/cms` lokal)
 - `src/pages/suche.astro` — Pagefind-Suche (Index nur über Artikel via `data-pagefind-body`; Assets erst nach Build vorhanden)
-- `src/assets/og-standard.svg|png` — Standard-Teilen-Bild (SVG = Design-Quelle, PNG = gerastert eingecheckt; Neu-Raster-Befehl im BaseLayout-Kommentar)
+- `src/lib/teilen.ts` — Teilen-Bild (og:image) für alle Seiten: 1200×630, JPEG, mittig zugeschnitten; Quelle ist das Titelbild der Startseite bzw. eines Artikels (folgt also Lisas Fotos im CMS)
 - `.github/workflows/deploy.yml` — Build + Pages-Deploy; FTP-Job für Phase 2 vorbereitet (auskommentiert)
 
 ## Eiserne Regeln
@@ -73,4 +73,4 @@ Remove-Item Env:BASE_PATH; Remove-Item Env:SITE_URL
 - **`Intl` liefert Kurz-Monate je nach Node-/ICU-Version mal mit, mal ohne Punkt** („Apr.“/„Apr“) — die Datums-Plakette nutzt deshalb eine eigene Liste (`MONATE_KURZ` in `format.ts`).
 - **Vitest ignoriert `.claude/**`** (`vitest.config.ts`): Worktrees unter `.claude/worktrees/` enthalten Kopien der Tests, die sonst lokal mitliefen.
 - **Base-Pfad-Build nur in PowerShell:** Git-Bash verbiegt `BASE_PATH=/achievewear-blog` zu `C:\Program Files\Git\achievewear-blog` (Build bricht mit ENOENT ab).
-- **Astro rastert importierte SVGs nicht zu PNG** (`getImage` mit `format: 'png'` wird bei SVG-Quellen still ignoriert) — deshalb liegt das og-Standard-Bild als eingechecktes PNG neben seiner SVG-Quelle.
+- **Astro rastert importierte SVGs nicht zu PNG/JPEG** (`getImage` mit `format` wird bei SVG-Quellen still ignoriert) — `teilenBildUrl()` liefert bei SVG darum kein Teilen-Bild und warnt im Build-Log.
