@@ -8,8 +8,8 @@ tags:
   - armsleeves
   - anleitung
   - anfängerfreundlich
-cover: bilder/armsleeves-selber-naehen-einstieg/cover-armsleeves.svg
-coverAlt: 'Illustration: zwei Armsleeves mit Stichlinien und Maßband'
+cover: bilder/armsleeves-selber-naehen-einstieg/cover-armsleeves.jpg
+coverAlt: 'Salbeigrüne Armsleeves auf Leinen, daneben Maßband, Garn, Schere, Schnittmuster und Laufschuhe'
 draft: false
 signature: true
 ---

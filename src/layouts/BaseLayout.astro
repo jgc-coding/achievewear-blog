@@ -6,6 +6,7 @@ import '@fontsource/inter/600.css';
 import '@fontsource/cormorant-garamond/500.css';
 import '@fontsource/cormorant-garamond/600.css';
 import '@fontsource/cormorant-garamond/500-italic.css';
+// Great Vibes nur für das Logo ("wear") — Teil von Lisas CI, sonst keine Schreibschrift.
 import '@fontsource/great-vibes/400.css';
 import '../styles/global.css';
 import { getImage } from 'astro:assets';
@@ -14,7 +15,6 @@ import Footer from '../components/Footer.astro';
 import YouTubeConsent from '../components/YouTubeConsent.astro';
 import { getSiteSettings, getDesign } from '../lib/settings';
 import { withBase } from '../lib/url';
-import { VARIANTE, VARIANTEN, VARIANTEN_INFO, wurzelPfad } from '../lib/variante';
 // Standard-Teilen-Bild. Design-Quelle ist og-standard.svg — Astros Bild-Service
 // rastert importierte SVGs nicht zu PNG, deshalb liegt das gerasterte PNG mit im
 // Repo. Nach einer Änderung am SVG das PNG neu rastern (im Projekt-Root):
@@ -48,13 +48,7 @@ const ogImageFinal = ogImage ?? ogImageFallback;
 const cssVars =
   `:root{--creme:${design.creme};--rosa-zart:${design.rosaZart};--mint:${design.mint};` +
   `--salbei:${design.salbei};--anthrazit:${design.anthrazit};--salbei-tief:${design.salbeiTief};` +
-  `--altrose:${design.altrose};--altrose-dunkel:${design.altroseDunkel};--weiss:${design.weiss};}`;
-
-// Design-Varianten (nur wenn per VARIANT gebaut): eigene Stylesheets aus public/
-// statt gebündelter Imports — so bleibt der Build der echten Website unverändert.
-// Vorschau-Entwürfe gehören nie in eine Suchmaschine, deshalb dort immer noindex.
-const wurzel = wurzelPfad();
-const nichtIndexieren = Boolean(site.noindex || VARIANTE);
+  `--volt:${design.volt};--volt-tief:${design.voltTief};--weiss:${design.weiss};}`;
 ---
 
 <!doctype html>
@@ -64,7 +58,7 @@ const nichtIndexieren = Boolean(site.noindex || VARIANTE);
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>{fullTitle}</title>
     <meta name="description" content={metaDescription} />
-    {nichtIndexieren && <meta name="robots" content="noindex, nofollow" />}
+    {site.noindex && <meta name="robots" content="noindex, nofollow" />}
     {canonical && <link rel="canonical" href={canonical} />}
     <link rel="icon" type="image/svg+xml" href={withBase('/favicon.svg')} />
     <link
@@ -82,21 +76,12 @@ const nichtIndexieren = Boolean(site.noindex || VARIANTE);
     {ogImageFinal && <meta property="og:image" content={ogImageFinal} />}
     <meta name="twitter:card" content="summary_large_image" />
     <style set:html={cssVars}></style>
-    {
-      VARIANTE && (
-        <>
-          <link rel="stylesheet" href={withBase('/varianten/schrift.css')} />
-          <link rel="stylesheet" href={withBase(`/varianten/${VARIANTE}.css`)} />
-          <link rel="stylesheet" href={withBase('/varianten/leiste.css')} />
-        </>
-      )
-    }
     <script is:inline>
       // Kennzeichnet, dass JavaScript läuft — erst dann werden Einblend-Effekte aktiviert.
       document.documentElement.classList.add('js');
     </script>
   </head>
-  <body id={VARIANTE ? 'variante' : undefined} data-variante={VARIANTE || undefined}>
+  <body>
     <a class="skip-link" href="#inhalt">Zum Inhalt springen</a>
     <Header />
     <main id="inhalt">
@@ -105,24 +90,6 @@ const nichtIndexieren = Boolean(site.noindex || VARIANTE);
     <Footer />
     <!-- Video-Boxen können in jedem Markdown-Inhalt vorkommen — Artikel wie feste Seiten. -->
     <YouTubeConsent />
-    {
-      VARIANTE && (
-        <nav class="varianten-leiste" aria-label="Design-Varianten">
-          <span class="varianten-leiste__titel">Variante</span>
-          <a href={`${wurzel}/`}>Aktuell</a>
-          {VARIANTEN.map((eintrag) => (
-            <a
-              href={`${wurzel}/varianten/${eintrag}/`}
-              class={eintrag === VARIANTE ? 'aktiv' : undefined}
-              aria-current={eintrag === VARIANTE ? 'page' : undefined}
-            >
-              {eintrag.toUpperCase()}{' '}
-              <span class="varianten-leiste__lang">{VARIANTEN_INFO[eintrag].name}</span>
-            </a>
-          ))}
-        </nav>
-      )
-    }
     <script>
       // Sanftes Einblenden der Sektionen beim Scrollen (respektiert prefers-reduced-motion via CSS).
       const beobachter = new IntersectionObserver(

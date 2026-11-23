@@ -1,13 +1,12 @@
 {
   "name": "achievewear-blog",
-  "version": "0.4.0",
+  "version": "0.5.0",
   "private": true,
   "type": "module",
   "description": "AchieveWear — Blog rund um Nähen & Laufen. Website + Redaktionsbereich für Lisa.",
   "scripts": {
     "dev": "astro dev",
     "build": "astro build && pagefind --site dist",
-    "build:varianten": "node scripts/varianten-bauen.mjs",
     "preview": "astro preview",
     "check": "astro check",
     "test": "vitest run"
@@ -23,9 +22,6 @@
   },
   "devDependencies": {
     "@astrojs/check": "^0.9.9",
-    "@fontsource-variable/bricolage-grotesque": "^5.3.0",
-    "@fontsource-variable/fraunces": "^5.3.0",
-    "@fontsource/archivo-black": "^5.3.0",
     "pagefind": "^1.5.2",
     "typescript": "^5.9.3",
     "vitest": "^4.1.10"

@@ -77,7 +77,12 @@ const startseite = defineCollection({
     z.object({
       welcome: z.object({
         headline: z.string(),
+        // Zweiter Teil der Willkommens-Überschrift (wird kursiv gesetzt).
+        // Der Feldname stammt aus der Zeit der Schreibschrift — bleibt, damit
+        // vorhandene Inhalte ohne Umzug weiter gelesen werden.
         scriptLine: z.string(),
+        // Kursive Zeile unten im großen Titelbild (neu in 0.5.0, daher mit Default)
+        heroLine: z.string().default('In deinem Tempo. Schritt für Schritt.'),
         text: z.string(),
         buttonText: z.string(),
         buttonUrl: z.string(),
@@ -93,6 +98,16 @@ const startseite = defineCollection({
         image: relImage(image),
         imageAlt: z.string(),
       }),
+      // Bereich mit den drei runden Themenbildern (neu in 0.5.0, daher mit Default)
+      themen: z
+        .object({
+          headline: z.string(),
+          scriptLine: z.string(),
+        })
+        .default({
+          headline: 'Entdecke die Themen',
+          scriptLine: 'Nähen, Laufen und alles dazwischen',
+        }),
       blogSection: z.object({
         headline: z.string(),
         scriptLine: z.string(),
@@ -119,8 +134,11 @@ const design = defineCollection({
     salbei: hexFarbe(),
     anthrazit: hexFarbe(),
     salbeiTief: hexFarbe(),
-    altrose: hexFarbe(),
-    altroseDunkel: hexFarbe(),
+    // Volt-Akzente aus Lisas CI (neu in 0.5.0, daher mit Default).
+    // Die früheren Altrosé-Töne sind entfallen; stehen sie noch in einer alten
+    // design.yml, ignoriert das Schema sie einfach.
+    volt: hexFarbe().default('#EAFB9E'),
+    voltTief: hexFarbe().default('#C4DD5E'),
     weiss: hexFarbe(),
   }),
 });

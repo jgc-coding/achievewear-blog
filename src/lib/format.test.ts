@@ -1,5 +1,27 @@
 import { describe, it, expect } from 'vitest';
-import { formatDatum, isoDatum } from './format';
+import { datumPlakette, formatDatum, isoDatum } from './format';
+
+describe('datumPlakette', () => {
+  it('liefert Tag und kurzen deutschen Monat (12. April)', () => {
+    expect(datumPlakette(new Date('2026-04-12'))).toEqual({ tag: '12', monat: 'Apr.' });
+  });
+
+  // Monatsanfang ist der Off-by-one-Kandidat: westlich von UTC würde ohne
+  // UTC-Getter der 30. Juni erscheinen.
+  it('bleibt am Monatsersten beim richtigen Tag (1. Juli)', () => {
+    expect(datumPlakette(new Date('2026-07-01'))).toEqual({ tag: '1', monat: 'Juli' });
+  });
+
+  it('kennt alle zwölf Monate', () => {
+    const monate = Array.from({ length: 12 }, (_, i) =>
+      datumPlakette(new Date(Date.UTC(2026, i, 15))).monat
+    );
+    expect(monate).toEqual([
+      'Jan.', 'Feb.', 'März', 'Apr.', 'Mai', 'Juni',
+      'Juli', 'Aug.', 'Sept.', 'Okt.', 'Nov.', 'Dez.',
+    ]);
+  });
+});
 
 describe('formatDatum', () => {
   // Der 24.06. muss der 24. bleiben, egal in welcher Zeitzone der Test-Rechner steht:

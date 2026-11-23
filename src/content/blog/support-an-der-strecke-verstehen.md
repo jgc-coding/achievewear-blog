@@ -8,8 +8,8 @@ category: lauf-welt-verstehen
 tags:
   - wettkampftag
   - begleiten
-cover: bilder/support-an-der-strecke-verstehen/cover-support.svg
-coverAlt: 'Illustration: Wimpelkette und ein großes Herz am Streckenrand'
+cover: bilder/support-an-der-strecke-verstehen/cover-support.jpg
+coverAlt: 'An einer Verpflegungsstelle im Wald reicht eine Hand einer Läuferin einen Becher Wasser'
 draft: false
 signature: true
 ---

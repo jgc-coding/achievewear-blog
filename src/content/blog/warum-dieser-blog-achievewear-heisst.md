@@ -7,8 +7,8 @@ date: 2026-06-10
 category: geschichten
 tags:
   - hinter den kulissen
-cover: bilder/warum-dieser-blog-achievewear-heisst/cover-achievewear.svg
-coverAlt: 'Illustration: ein Herz, halb Nählinie, halb Laufstrecke'
+cover: bilder/warum-dieser-blog-achievewear-heisst/cover-achievewear.jpg
+coverAlt: 'Laufschuhe mit limettengrünen Schnürsenkeln neben Garnrolle, Nadel und Maßband auf Leinen'
 draft: false
 signature: true
 ---

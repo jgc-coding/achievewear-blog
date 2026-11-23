@@ -53,22 +53,24 @@ const aeltere = currentPage < lastPage ? seitenUrl(currentPage + 1) : undefined;
     border-top: 1px solid rgba(58, 58, 58, 0.1);
   }
 
+  /* Wie die Knöpfe der Website: umrandetes Rechteck, dunkel beim Darüberfahren */
   .pagination a {
-    font-size: 12px;
+    font-size: 14px;
     font-weight: 600;
-    letter-spacing: 0.14em;
-    text-transform: uppercase;
     text-decoration: none;
-    color: var(--salbei-tief);
-    transition: color 0.2s ease;
+    color: var(--anthrazit);
+    border: 2px solid var(--anthrazit);
+    padding: 8px 16px;
+    transition: background 0.2s ease, color 0.2s ease;
   }
 
   .pagination a:hover {
-    color: var(--altrose-dunkel);
+    background: var(--anthrazit);
+    color: var(--volt);
   }
 
   .stand {
-    font-size: 12.5px;
+    font-size: 15px;
     color: var(--text-muted);
   }
 

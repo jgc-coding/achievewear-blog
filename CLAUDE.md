@@ -1,5 +1,7 @@
 # AchieveWear-Blog — Projekt-CLAUDE.md
 
+**Prozess-Stufe: Produkt** (Kundenprojekt für Lisa — Version, CHANGELOG, Tags, Regressionscheck).
+
 Deutschsprachiger Blog (Nähen + Laufen) für Lisa, mit Redaktionsbereich unter `/admin`.
 Nutzerin des Backends ist eine Nicht-Technikerin — **alles Sichtbare deutsch und einfach halten.**
 
@@ -8,7 +10,7 @@ Nutzerin des Backends ist eine Nicht-Technikerin — **alles Sichtbare deutsch u
 - **Astro 5** (statisch, kein SSR) — bewusst `^5` gepinnt, npm-latest wäre Astro 7 (nicht ungefragt upgraden!)
 - **Sveltia CMS** `0.170.2` (exakt gepinnt, pre-1.0) — lokal gebundelt via npm, KEIN CDN (DSGVO)
 - Vanilla-CSS mit Custom Properties (keine CSS-Frameworks), Fonts self-hosted via @fontsource
-  (Inter, Cormorant Garamond, Great Vibes)
+  (Inter = Fließtext, Cormorant Garamond = Überschriften, Great Vibes NUR im Logo-Wort „wear“)
 - Pagefind (statische Volltext-Suche, devDependency — läuft als Teil von `npm run build`), Vitest (Tests)
 - Hosting Phase 1: GitHub Pages (`jgc-coding/achievewear-blog`, öffentlich) · Phase 2: All-Inkl per FTP (siehe `docs/hosting-phase2-allinkl.md`)
 
@@ -17,11 +19,9 @@ Nutzerin des Backends ist eine Nicht-Technikerin — **alles Sichtbare deutsch u
 ```powershell
 npm run dev        # Dev-Server http://localhost:4321
 npm run build      # Produktions-Build nach dist/ (Base "/") inkl. Pagefind-Suchindex
-npm run build:varianten  # dist/ PLUS die Design-Varianten nach dist/varianten/v4|v5|v6
 npm run preview    # dist/ lokal ansehen
-$env:VARIANT='v5'; npm run dev   # eine Variante im Dev-Server; danach Remove-Item Env:VARIANT
 npm run check      # Astro/TypeScript-Prüfung
-npm test           # Vitest (31 Tests: URL-Helfer, Datumsformat, remark-Plugins)
+npm test           # Vitest (34 Tests: URL-Helfer, Datumsformat/-Plakette, remark-Plugins)
 
 # Build wie auf GitHub Pages (Base-Pfad-Test — vor jedem Release einmal laufen lassen):
 $env:BASE_PATH='/achievewear-blog'; $env:SITE_URL='https://jgc-coding.github.io'; npm run build; npm run preview
@@ -36,7 +36,8 @@ Remove-Item Env:BASE_PATH; Remove-Item Env:SITE_URL
 - `src/content/` — alle Inhalte (Markdown + YAML). **Bilder liegen entry-relativ in `bilder/`-Unterordnern**, damit Astro sie optimiert und der Base-Pfad egal ist
 - `src/lib/url.ts` — `withBase()` / `absUrl()`: die EINZIGE Stelle für Pfad-Präfixe
 - `src/lib/settings.ts` — typisierte Helper für die Einstellungs-Collections
-- `src/lib/variante.ts` + `public/varianten/*.css` + `scripts/varianten-bauen.mjs` — Design-Varianten zum Aussuchen (Details: `docs/design-varianten.md`). Ohne gesetzte Umgebungsvariable `VARIANT` entsteht die normale Website
+- `src/styles/global.css` — Design-Grundlage: Farb-Variablen, Knöpfe (`.btn`, `.btn--dunkel`), `.kicker`, `.kursiv-zeile`, `.mini-linie`, Farbbänder (`.band--creme|mint|rosa`, `.band--schraeg`), Prose-Typografie
+- Design-Bausteine: `Header` (Handy: Menü-Knopf + Lupe), `Footer`, `SektionsTitel`, `PostKarte` (Datums-Plakette), `UeberMichKasten` (liest den Über-mich-Bereich der Startseite)
 - `public/admin/config.yml` — Sveltia-Konfiguration (deutsche Labels/Hints)
 - `src/pages/admin/index.astro` — Redaktionsbereich (bundelt `@sveltia/cms` lokal)
 - `src/pages/suche.astro` — Pagefind-Suche (Index nur über Artikel via `data-pagefind-body`; Assets erst nach Build vorhanden)
@@ -66,5 +67,10 @@ Remove-Item Env:BASE_PATH; Remove-Item Env:SITE_URL
 - Lokaler CMS-Test: „Work with Local Repository" nur in Chrome/Edge; macht KEINE git-Commits.
 - `import.meta.env.BASE_URL` hat je nach Konfiguration mal einen Trailing-Slash, mal nicht — deshalb immer über `withBase()` gehen.
 - **Styles, die mehrere Routen teilen, gehören nach `global.css`:** Astro legt Seiten-`<style>` (auch `is:global`) nur in die eigene Route. Die Kategorie-Seiten nutzten Klassen aus dem Blog-Index-Style und waren dadurch live ungestylt (in v0.2.0 behoben).
-- **Astro hängt seine gebündelten Stylesheets HINTER selbst eingebundene `<link>`s aus `public/`.** Eine dort definierte `:root`-Farbe verliert deshalb gegen `global.css`. Und Astros Komponenten-Styles bekommen pro Element ein `data-astro-cid`-Attribut, `.a .b` wird also zu `.a[cid] .b[cid]` — ein Klassen-Selektor überschreibt das nicht. Beides löst ein ID-Präfix (`#variante ...`), das unabhängig von der Reihenfolge gewinnt.
+- **Astro hängt seine gebündelten Stylesheets HINTER selbst eingebundene `<link>`s aus `public/`.** Eine dort definierte `:root`-Farbe verliert deshalb gegen `global.css`. Und Astros Komponenten-Styles bekommen pro Element ein `data-astro-cid`-Attribut, `.a .b` wird also zu `.a[cid] .b[cid]` — ein Klassen-Selektor überschreibt das nicht (gelernt bei den Design-Varianten, v0.3/v0.4).
+- **Farbregeln aus Lisas CI:** Volt (`--volt`) nur auf dunklem Grund (Anthrazit); Volt tief (`--volt-tief`) auf hellem Grund nur als Fläche/Linie, nie als Schrift. Salbei ist als Schrift auf Creme zu blass (2,7:1) — lesbarer Salbei-Text nutzt `--salbei-tief`.
+- **`.sr-only` ist absolut positioniert:** Sitzt es in einem Element ohne `position`, hängt es an der ganzen Seite — in der Wisch-Reihe der Startseite machte das die Seite am Handy 23 px zu breit. Karten/Container mit `.sr-only` darin brauchen `position: relative`.
+- **`Intl` liefert Kurz-Monate je nach Node-/ICU-Version mal mit, mal ohne Punkt** („Apr.“/„Apr“) — die Datums-Plakette nutzt deshalb eine eigene Liste (`MONATE_KURZ` in `format.ts`).
+- **Vitest ignoriert `.claude/**`** (`vitest.config.ts`): Worktrees unter `.claude/worktrees/` enthalten Kopien der Tests, die sonst lokal mitliefen.
+- **Base-Pfad-Build nur in PowerShell:** Git-Bash verbiegt `BASE_PATH=/achievewear-blog` zu `C:\Program Files\Git\achievewear-blog` (Build bricht mit ENOENT ab).
 - **Astro rastert importierte SVGs nicht zu PNG** (`getImage` mit `format: 'png'` wird bei SVG-Quellen still ignoriert) — deshalb liegt das og-Standard-Bild als eingechecktes PNG neben seiner SVG-Quelle.

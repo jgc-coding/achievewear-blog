@@ -3,6 +3,33 @@
 Alle nennenswerten Änderungen an diesem Projekt werden hier dokumentiert.
 Format angelehnt an [Keep a Changelog](https://keepachangelog.com/de/), Versionierung nach [SemVer](https://semver.org/lang/de/).
 
+## [0.5.0] — 2026-11-23
+
+Neues Aussehen nach Lisas Vorlage (der Blog „Make it Yours", vor allem die Handy-Ansicht) — in Lisas eigenen Farben und Schriften. Die Design-Varianten V4–V6 sind damit erledigt und entfernt.
+
+### Geändert
+- **Stil wie die Vorlage:** viel Weißraum, weißer Grund mit Farbbändern in Creme und Mint, schlanke Serifen-Überschriften (Cormorant Garamond), Fließtext in Inter mit mindestens 16 px und Zeilenabstand 1,7. Umrandete rechteckige Knöpfe, die beim Darüberfahren dunkel werden.
+- **Lisas CI-Farben:** Volt und Volt tief neu im Redaktionsbereich (Volt nur auf Anthrazit, Volt tief nur als Linie); die beiden Altrosé-Töne sind entfallen. Jedes Farbfeld erklärt jetzt, wo die Farbe auftaucht.
+- **Keine Schreibschrift mehr** außer im Logo-Wort „wear“ (Teil von Lisas CI). Frühere Schreibschrift-Zeilen sind jetzt kursive Serifen-Zeilen.
+- **Kopfzeile:** am Handy Menü-Knopf links, Logo in der Mitte, Lupe rechts; das Menü klappt unter der Kopfzeile auf. Am Desktop Menü links und rechts vom Logo.
+- **Startseite neu aufgebaut:** großes Titelbild mit Schriftzug und kursiver Zeile · Willkommen · „Neu im Blog“ (neuester Artikel groß) · Themen als drei runde Bilder auf schrägem Creme-Band · „Aus dem Blog“ (am Handy zum Wischen) · Über mich halb Bild, halb Text · Zitat · Newsletter-Band in Mint.
+- **Artikel-Karten:** Bild quer mit runder Datums-Plakette (Anthrazit mit Volt), Kategorie, Titel, kurze Linie, Anriss, „Lesen“.
+- **Artikelseite:** der Artikel steht als weißes Blatt mit feiner Kante; Meta-Zeile „Veröffentlicht am … · Lesezeit“; Zitate im Text als helle Kästen.
+- **Fußzeile** mit den Spalten „Rechtliches“ und „Links“.
+- Platzhalter-Illustrationen durch Platzhalter-Fotos ersetzt (Titelbild, Über mich, drei Themen, drei Artikelbilder) — bis Lisa eigene Fotos einstellt.
+
+### Hinzugefügt
+- „Über mich“-Kasten am Ende der Blog-Übersicht, der Themenseiten und jedes Artikels (liest den Über-mich-Bereich der Startseite).
+- Neue Felder im Redaktionsbereich: „Kursive Zeile im Titelbild“ und der Bereich „Themen“ — beide mit Vorgabewerten, alte Einstellungen bleiben gültig.
+- Test für die Datums-Plakette (alle zwölf Monate, Monatsanfang ohne Off-by-one).
+
+### Entfernt
+- Design-Varianten V4–V6 samt Vergleichsseite `/varianten/`, Varianten-Build und drei Varianten-Schriften (Rückkehrpunkt: Tag `v0.4.0`).
+
+### Behoben
+- Tests liefen lokal dreifach mit, weil Arbeitskopien unter `.claude/worktrees/` mitgezählt wurden.
+- Die Blog-Übersicht hatte keine Hauptüberschrift (h1) — jetzt „Der Blog“.
+
 ## [0.4.0] — 2026-07-29
 
 Zweiter Anlauf bei den Design-Varianten: Die erste Runde (dunkel, Neon-Akzent) gefiel nicht. Drei neue Entwürfe, alle hell, in der warmen Farbwelt der Website — kräftig durch Fläche, Größe und Ausrichtung statt durch Dunkelheit.

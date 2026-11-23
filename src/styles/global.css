@@ -1,8 +1,20 @@
 /* ============================================================
    AchieveWear — globales Stylesheet
+   Stil: luftig und redaktionell (Vorbild: Lisas Lieblings-Blog) —
+   viel Weißraum, große Bilder, schlanke Serifen-Überschriften,
+   umrandete Knöpfe, Farbbänder in Creme/Mint/Rosa.
+
    Die Farbwerte kommen als CSS-Variablen aus den Einstellungen
    (src/content/einstellungen/design.yml — im Redaktionsbereich
    änderbar). Hier stehen nur Fallbacks für den Notfall.
+
+   Farbregeln (aus Lisas CI):
+   - Volt (#EAFB9E) NUR auf dunklem Grund (Anthrazit): Knopf-Schrift,
+     Datums-Plakette.
+   - Volt tief (#C4DD5E) auf hellem Grund NUR als Fläche oder Linie,
+     nie als Schriftfarbe (zu wenig Kontrast zum Lesen).
+   - Salbei ist als Schrift auf Creme zu blass — lesbarer Salbei-Text
+     nutzt "Salbei tief".
    ============================================================ */
 
 :root {
@@ -12,16 +24,25 @@
   --salbei: #8a9a7b;
   --anthrazit: #3a3a3a;
   --salbei-tief: #5f6f52;
-  --altrose: #cda698;
-  --altrose-dunkel: #b98a78;
+  --volt: #eafb9e;
+  --volt-tief: #c4dd5e;
   --weiss: #ffffff;
 
-  --text-muted: #6f6a64;
-  --schatten-weich: 0 14px 34px rgba(58, 58, 58, 0.12);
+  /* Abgeleitete Töne (bewusst nicht im CMS — sie folgen aus Lesbarkeit) */
+  --text-muted: #69645f; /* 5,5:1 auf Weiß, 4,9:1 auf Creme */
+  --linie: rgba(58, 58, 58, 0.12);
+  --schatten-karte: 0 1px 2px rgba(58, 58, 58, 0.05), 0 10px 28px rgba(58, 58, 58, 0.07);
+
   --font-serif: 'Cormorant Garamond', Georgia, 'Times New Roman', serif;
   --font-sans: 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
-  --font-script: 'Great Vibes', 'Segoe Script', cursive;
-  --container: 1100px;
+  /* Schreibschrift gehört nur noch zum Logo (Lisas CI) — nirgends sonst verwenden. */
+  --font-logo-script: 'Great Vibes', 'Segoe Script', cursive;
+
+  --container: 1160px;
+  --container-schmal: 760px;
+  --abstand-sektion: clamp(64px, 10vw, 120px);
+  /* Höhe der schrägen Oberkante bei Farbbändern (wie in der Vorlage) */
+  --schraege: clamp(28px, 5vw, 72px);
 }
 
 /* ---------- Basis ---------- */
@@ -36,12 +57,13 @@ html {
   scroll-behavior: smooth;
 }
 
+/* Lisas Vorgabe: Fließtext mindestens 16 px, Zeilenabstand 1,6–1,8. */
 body {
   margin: 0;
-  background: var(--creme);
+  background: var(--weiss);
   color: var(--anthrazit);
   font-family: var(--font-sans);
-  font-size: 16.5px;
+  font-size: 17px;
   line-height: 1.7;
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
@@ -59,9 +81,9 @@ h2,
 h3,
 h4 {
   font-family: var(--font-serif);
-  color: var(--salbei-tief);
+  color: var(--anthrazit);
   line-height: 1.15;
-  font-weight: 600;
+  font-weight: 500;
   margin: 0 0 0.5em;
 }
 
@@ -74,13 +96,14 @@ a {
 }
 
 ::selection {
-  background: var(--rosa-zart);
+  background: var(--volt-tief);
+  color: var(--anthrazit);
 }
 
 :focus-visible {
-  outline: 2px solid var(--salbei-tief);
+  outline: 2px solid var(--anthrazit);
   outline-offset: 3px;
-  border-radius: 2px;
+  border-radius: 1px;
 }
 
 /* ---------- Bausteine ---------- */
@@ -88,62 +111,145 @@ a {
 .container {
   max-width: var(--container);
   margin-inline: auto;
-  padding-inline: clamp(20px, 4vw, 40px);
+  padding-inline: clamp(18px, 4vw, 40px);
 }
 
+.container--schmal {
+  max-width: var(--container-schmal);
+}
+
+/* Knopf wie in der Vorlage: umrandetes Rechteck. Beim Darüberfahren wird er
+   dunkel — dort (und nur dort) darf Volt als Schrift erscheinen. */
 .btn {
   display: inline-block;
-  background: var(--salbei);
-  color: var(--creme);
+  background: transparent;
+  color: var(--anthrazit);
   font-family: var(--font-sans);
-  font-size: 12.5px;
+  font-size: 15px;
   font-weight: 600;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
+  letter-spacing: 0.02em;
+  line-height: 1.3;
   text-decoration: none;
-  padding: 13px 28px;
-  border-radius: 3px;
-  border: 1px solid transparent;
+  text-align: center;
+  padding: 11px 24px;
+  border: 2px solid var(--anthrazit);
+  border-radius: 0;
   cursor: pointer;
-  transition: background 0.25s ease, transform 0.25s ease, box-shadow 0.25s ease;
+  transition: background 0.22s ease, color 0.22s ease;
 }
 
 .btn:hover {
-  background: var(--salbei-tief);
-  transform: translateY(-1px);
-  box-shadow: 0 8px 18px rgba(95, 111, 82, 0.25);
+  background: var(--anthrazit);
+  color: var(--volt);
 }
 
-.btn--outline {
-  background: transparent;
-  color: var(--salbei-tief);
-  border-color: var(--salbei);
+/* Gefüllter Knopf (Newsletter): dunkel mit Volt-Schrift wie das
+   schwarze „Anmelden" der Vorlage. */
+.btn--dunkel {
+  background: var(--anthrazit);
+  color: var(--volt);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  font-size: 14px;
 }
 
-.btn--outline:hover {
-  background: var(--salbei);
-  color: var(--creme);
+.btn--dunkel:hover {
+  background: #262626;
+  color: var(--volt);
 }
 
-.script {
-  font-family: var(--font-script);
-  color: var(--altrose-dunkel);
-  font-weight: 400;
+/* Kleine Überzeile in Versalien („Neu im Blog", Kategorie, Datum) */
+.kicker {
+  display: block;
+  font-family: var(--font-sans);
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  margin: 0 0 12px;
 }
 
+/* Kursive Begleitzeile (ersetzt die frühere Schreibschrift) */
+.kursiv-zeile {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-weight: 500;
+  font-size: clamp(20px, 2.4vw, 24px);
+  line-height: 1.35;
+  color: var(--text-muted);
+  margin: 0;
+}
+
+/* Kurzer Strich unter Überschriften — Volt tief als reine Linie */
 .mini-linie {
   display: block;
-  width: 38px;
+  width: 44px;
   height: 2px;
-  background: var(--altrose);
+  background: var(--volt-tief);
+  border: 0;
+  margin: 14px 0 18px;
+}
+
+.mini-linie--mitte {
+  margin-inline: auto;
+}
+
+/* „Lesen"-Link mit Unterstrich wie in der Vorlage */
+.lesen-link {
+  display: inline-block;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--anthrazit);
+  text-decoration: none;
+  padding-bottom: 4px;
+  border-bottom: 2px solid var(--volt-tief);
+  transition: border-color 0.2s ease;
+}
+
+/* Farbband mit schräger Oberkante (Vorlage: „Shop by Category", „Blog News") */
+.band {
+  padding-block: var(--abstand-sektion);
+}
+
+.band--creme {
+  background: var(--creme);
+}
+
+.band--mint {
+  background: var(--mint);
+}
+
+.band--rosa {
+  background: var(--rosa-zart);
+}
+
+.band--schraeg {
+  padding-top: calc(var(--abstand-sektion) + var(--schraege));
+  clip-path: polygon(0 var(--schraege), 100% 0, 100% 100%, 0 100%);
+}
+
+/* Nur für Screenreader sichtbar (z. B. ausgeschriebenes Datum zur Plakette) */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
 }
 
 .skip-link {
   position: absolute;
   left: -9999px;
   top: 0;
-  background: var(--salbei-tief);
-  color: var(--creme);
+  background: var(--anthrazit);
+  color: var(--volt);
   padding: 10px 18px;
   z-index: 100;
   text-decoration: none;
@@ -159,7 +265,7 @@ a {
 
 html.js .fade-up {
   opacity: 0;
-  transform: translateY(20px);
+  transform: translateY(18px);
   transition: opacity 0.7s ease, transform 0.7s ease;
 }
 
@@ -171,8 +277,8 @@ html.js .fade-up.sichtbar {
 /* ---------- Artikel-Typografie (.prose) ---------- */
 
 .prose {
-  font-size: 17.5px;
-  line-height: 1.8;
+  font-size: 17px;
+  line-height: 1.75;
 }
 
 .prose > :first-child {
@@ -180,36 +286,41 @@ html.js .fade-up.sichtbar {
 }
 
 .prose h2 {
-  font-size: clamp(27px, 3.4vw, 34px);
-  letter-spacing: 0.05em;
-  margin-top: 1.7em;
+  font-size: clamp(28px, 3.4vw, 34px);
+  margin-top: 1.6em;
 }
 
 .prose h3 {
   font-size: clamp(22px, 2.6vw, 26px);
-  margin-top: 1.5em;
+  margin-top: 1.4em;
 }
 
 .prose a {
   color: var(--salbei-tief);
-  text-decoration-thickness: 1px;
-  text-decoration-color: var(--altrose);
-  text-underline-offset: 3px;
+  text-decoration-thickness: 2px;
+  text-decoration-color: var(--volt-tief);
+  text-underline-offset: 4px;
   transition: color 0.2s ease;
 }
 
 .prose a:hover {
-  color: var(--altrose-dunkel);
+  color: var(--anthrazit);
 }
 
+.prose strong {
+  font-weight: 600;
+}
+
+/* Zitat als heller Kasten — wie die Material-Kästen der Vorlage */
 .prose blockquote {
-  margin: 1.7em 0;
-  padding: 0.4em 0 0.4em 1.3em;
-  border-left: 3px solid var(--altrose);
+  margin: 1.8em 0;
+  padding: 1.1em 1.4em;
+  background: var(--rosa-zart);
+  border-left: 3px solid var(--salbei);
   font-family: var(--font-serif);
   font-style: italic;
-  font-size: 1.12em;
-  color: var(--text-muted);
+  font-size: 1.15em;
+  line-height: 1.55;
 }
 
 .prose blockquote p:last-child {
@@ -227,12 +338,10 @@ html.js .fade-up.sichtbar {
 }
 
 .prose li::marker {
-  color: var(--altrose-dunkel);
+  color: var(--salbei);
 }
 
 .prose img {
-  border-radius: 4px;
-  box-shadow: var(--schatten-weich);
   margin-block: 1.6em;
 }
 
@@ -240,12 +349,12 @@ html.js .fade-up.sichtbar {
   border: 0;
   height: 2px;
   width: 64px;
-  background: var(--altrose);
+  background: var(--volt-tief);
   margin: 2.4em auto;
 }
 
 .prose code {
-  background: var(--rosa-zart);
+  background: var(--creme);
   padding: 0.15em 0.45em;
   border-radius: 3px;
   font-size: 0.88em;
@@ -255,7 +364,7 @@ html.js .fade-up.sichtbar {
   border-collapse: collapse;
   width: 100%;
   margin: 1.5em 0;
-  font-size: 0.94em;
+  font-size: 16px;
 }
 
 .prose th,
@@ -272,13 +381,20 @@ html.js .fade-up.sichtbar {
 
 /* ---------- Blog-Übersicht & Kategorie-Seiten ---------- */
 /* Bewusst global: Blog-Übersicht UND Kategorie-Seiten teilen sich diese Klassen.
-   Als Seiten-Styles (früher is:global im Blog-Index) landen sie nur in der eigenen
-   Route — die Kategorie-Seiten nutzen dieselben Klassen, blieben dort aber ungestylt. */
+   Seiten-Styles landen in Astro nur in der eigenen Route (siehe CLAUDE.md). */
 
 .blog-index {
-  padding-top: clamp(30px, 5vw, 56px);
+  padding-top: clamp(40px, 6vw, 72px);
 }
 
+.blog-index__einleitung {
+  text-align: center;
+  max-width: 56ch;
+  margin: -8px auto clamp(26px, 4vw, 36px);
+  color: var(--text-muted);
+}
+
+/* Filter als umrandete Rechtecke — wie die Kategorie-Knöpfe der Vorlage */
 .filter {
   display: flex;
   justify-content: center;
@@ -287,49 +403,45 @@ html.js .fade-up.sichtbar {
   margin-bottom: clamp(32px, 5vw, 52px);
 }
 
-.filter-pill {
-  font-size: 11.5px;
+.filter-knopf {
+  font-size: 15px;
   font-weight: 600;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
   text-decoration: none;
   color: var(--anthrazit);
   background: var(--weiss);
-  border: 1px solid var(--mint);
-  border-radius: 999px;
-  padding: 8px 18px;
-  transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+  border: 2px solid var(--anthrazit);
+  padding: 7px 16px;
+  transition: background 0.2s ease, color 0.2s ease;
 }
 
-.filter-pill:hover {
-  border-color: var(--salbei);
-  color: var(--salbei-tief);
-}
-
-.filter-pill.aktiv {
-  background: var(--salbei);
-  border-color: var(--salbei);
-  color: var(--creme);
+.filter-knopf:hover,
+.filter-knopf.aktiv {
+  background: var(--anthrazit);
+  color: var(--volt);
 }
 
 .post-grid {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: clamp(24px, 4vw, 48px);
+  gap: clamp(24px, 3vw, 36px);
 }
 
-@media (max-width: 900px) {
+@media (max-width: 960px) {
   .post-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
 
-@media (max-width: 640px) {
+@media (max-width: 620px) {
   .post-grid {
     grid-template-columns: 1fr;
-    max-width: 360px;
-    margin-inline: auto;
   }
+}
+
+.leer-hinweis {
+  text-align: center;
+  color: var(--text-muted);
+  padding: clamp(32px, 6vw, 64px) 0;
 }
 
 /* ---------- YouTube-2-Klick-Einbettung ---------- */
@@ -338,9 +450,8 @@ html.js .fade-up.sichtbar {
   position: relative;
   aspect-ratio: 16 / 9;
   margin: 1.8em 0;
-  border-radius: 6px;
   overflow: hidden;
-  background: linear-gradient(135deg, var(--mint), var(--rosa-zart));
+  background: linear-gradient(135deg, var(--mint), var(--creme));
 }
 
 .yt-consent iframe {
@@ -371,7 +482,7 @@ html.js .fade-up.sichtbar {
   width: 64px;
   height: 64px;
   border-radius: 50%;
-  background: var(--salbei-tief);
+  background: var(--anthrazit);
   position: relative;
   transition: transform 0.2s ease;
 }
@@ -382,7 +493,7 @@ html.js .fade-up.sichtbar {
   left: 55%;
   top: 50%;
   transform: translate(-50%, -50%);
-  border-left: 18px solid var(--creme);
+  border-left: 18px solid var(--volt);
   border-top: 11px solid transparent;
   border-bottom: 11px solid transparent;
 }
@@ -392,13 +503,12 @@ html.js .fade-up.sichtbar {
 }
 
 .yt-consent-label {
-  font-size: 15px;
+  font-size: 16px;
   font-weight: 600;
-  letter-spacing: 0.04em;
 }
 
 .yt-consent-hint {
-  font-size: 12px;
+  font-size: 13px;
   color: var(--text-muted);
   max-width: 36ch;
   line-height: 1.5;

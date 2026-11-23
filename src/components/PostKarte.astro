@@ -1,123 +1,160 @@
 ---
-// Artikel-Karte für Blog-Übersicht und Kategorie-Seiten:
-// Hochkant-Titelbild im weißen Rahmen, Kategorie + Datum, Titel, Teaser.
+// Artikel-Karte im Stil der Vorlage (Blog-Übersicht, Kategorie-Seiten,
+// Startseite, "Mehr aus …"): weiße Karte, Bild quer mit runder
+// Datums-Plakette (Anthrazit + Volt), darunter Kategorie, Titel, kurze
+// Linie, Anriss und "Lesen".
 import { Image } from 'astro:assets';
 import type { CollectionEntry } from 'astro:content';
 import { withBase } from '../lib/url';
-import { formatDatum, isoDatum } from '../lib/format';
+import { datumPlakette, formatDatum, isoDatum } from '../lib/format';
 
 interface Props {
   post: CollectionEntry<'blog'>;
   kategorieName: string;
-  kategorieFarbe: string;
+  /** h2 auf Seiten, deren Titel das h1 ist und keine weitere Zwischenebene haben */
+  ueberschrift?: 'h2' | 'h3';
 }
 
-const { post, kategorieName, kategorieFarbe } = Astro.props;
+const { post, kategorieName, ueberschrift = 'h3' } = Astro.props;
+const Titel = ueberschrift;
+const plakette = datumPlakette(post.data.date);
 ---
 
 <article class="post-karte">
   <a class="karte-link" href={withBase(`/blog/${post.id}`)}>
-    <span class="karte-rahmen">
+    <span class="karte-bild">
       <Image
         src={post.data.cover}
         alt={post.data.coverAlt}
-        widths={[340, 680]}
-        sizes="(max-width: 780px) 86vw, 330px"
+        widths={[400, 800]}
+        sizes="(max-width: 620px) 92vw, (max-width: 960px) 46vw, 370px"
       />
-    </span>
-    <span class="karte-meta">
-      <span class="karte-kategorie" style={`--kategorie-farbe:${kategorieFarbe}`}>
-        {kategorieName}
+      <span class="plakette" aria-hidden="true">
+        <span class="plakette-tag">{plakette.tag}</span>
+        <span class="plakette-monat">{plakette.monat}</span>
       </span>
-      <span class="karte-punkt" aria-hidden="true">·</span>
-      <time datetime={isoDatum(post.data.date)}>{formatDatum(post.data.date)}</time>
     </span>
-    <h3 class="karte-titel">{post.data.title}</h3>
-    <p class="karte-teaser">{post.data.description}</p>
-    <span class="karte-weiter">Weiterlesen <span aria-hidden="true">→</span></span>
+    <span class="karte-inhalt">
+      <span class="kicker karte-kategorie">{kategorieName}</span>
+      <Titel class="karte-titel">{post.data.title}</Titel>
+      <span class="mini-linie" aria-hidden="true"></span>
+      <p class="karte-teaser">{post.data.description}</p>
+      <span class="lesen-link">
+        Lesen<span class="sr-only">: {post.data.title}</span>
+      </span>
+      <span class="sr-only">
+        Veröffentlicht am <time datetime={isoDatum(post.data.date)}>{formatDatum(post.data.date)}</time>
+      </span>
+    </span>
   </a>
 </article>
 
 <style>
+  .post-karte {
+    height: 100%;
+  }
+
   .karte-link {
-    display: block;
+    /* position: relative hält die unsichtbaren Vorlese-Texte (.sr-only, absolut
+       positioniert) in der Karte. Ohne das hingen sie an der ganzen Seite und
+       machten sie am Handy in der Wisch-Reihe 23 px zu breit (nachgemessen). */
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    background: var(--weiss);
+    border: 1px solid var(--linie);
+    box-shadow: var(--schatten-karte);
     text-decoration: none;
     color: inherit;
-    transition: transform 0.35s ease;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
   }
 
   .karte-link:hover {
-    transform: translateY(-6px);
+    transform: translateY(-4px);
+    box-shadow: 0 2px 4px rgba(58, 58, 58, 0.05), 0 18px 40px rgba(58, 58, 58, 0.1);
   }
 
-  .karte-rahmen {
+  .karte-bild {
+    position: relative;
     display: block;
-    background: var(--weiss);
-    padding: 9px;
-    border-radius: 2px;
-    box-shadow: var(--schatten-weich);
-    transition: box-shadow 0.35s ease;
+    overflow: hidden;
   }
 
-  .karte-link:hover .karte-rahmen {
-    box-shadow: 0 22px 44px rgba(58, 58, 58, 0.16);
-  }
-
-  .karte-rahmen :global(img) {
+  .karte-bild :global(img) {
     width: 100%;
-    aspect-ratio: 4 / 5;
+    aspect-ratio: 3 / 2;
     object-fit: cover;
+    transition: transform 0.6s ease;
   }
 
-  .karte-meta {
+  .karte-link:hover .karte-bild :global(img) {
+    transform: scale(1.03);
+  }
+
+  /* Runde Datums-Plakette — dunkel, darum darf hier Volt stehen */
+  .plakette {
+    position: absolute;
+    top: 14px;
+    left: 14px;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background: var(--anthrazit);
+    color: var(--volt);
     display: flex;
-    align-items: baseline;
-    gap: 8px;
-    margin-top: 16px;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    line-height: 1;
+  }
+
+  .plakette-tag {
+    font-size: 17px;
+    font-weight: 600;
+  }
+
+  .plakette-monat {
     font-size: 11px;
     font-weight: 600;
-    letter-spacing: 0.16em;
-    text-transform: uppercase;
-    color: var(--text-muted);
+    margin-top: 3px;
   }
 
-  /* Kategorie-Farbe kommt als CSS-Variable statt als direkte Farbe aus dem
-     style-Attribut — so bleibt sie überschreibbar (Inline-Farben sind es nicht). */
+  .karte-inhalt {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    flex: 1;
+    padding: 22px 24px 26px;
+  }
+
   .karte-kategorie {
-    color: var(--kategorie-farbe);
-  }
-
-  .karte-punkt {
-    color: var(--altrose);
+    color: var(--salbei-tief);
+    margin-bottom: 8px;
   }
 
   .karte-titel {
-    font-size: clamp(21px, 2.4vw, 25px);
-    letter-spacing: 0.02em;
-    margin: 8px 0 6px;
-    transition: color 0.2s ease;
+    font-size: clamp(23px, 2.4vw, 26px);
+    line-height: 1.2;
+    margin: 0;
   }
 
-  .karte-link:hover .karte-titel {
-    color: var(--altrose-dunkel);
+  .karte-inhalt .mini-linie {
+    margin: 14px 0 14px;
   }
 
   .karte-teaser {
-    font-size: 14.5px;
+    font-size: 16px;
     line-height: 1.65;
     color: var(--text-muted);
-    margin: 0 0 10px;
+    margin: 0 0 18px;
     display: -webkit-box;
     -webkit-line-clamp: 3;
     -webkit-box-orient: vertical;
     overflow: hidden;
   }
 
-  .karte-weiter {
-    font-size: 11.5px;
-    font-weight: 600;
-    letter-spacing: 0.16em;
-    text-transform: uppercase;
-    color: var(--salbei-tief);
+  .karte-inhalt .lesen-link {
+    margin-top: auto;
   }
 </style>

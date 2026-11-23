@@ -6,6 +6,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 import SektionsTitel from '../../components/SektionsTitel.astro';
 import PostKarte from '../../components/PostKarte.astro';
 import Pagination from '../../components/Pagination.astro';
+import UeberMichKasten from '../../components/UeberMichKasten.astro';
 import { getKategorien } from '../../lib/settings';
 import { withBase } from '../../lib/url';
 
@@ -26,13 +27,13 @@ const kategorieVon = (slug: string) => kategorien.find((k) => k.slug === slug);
   description="Alle Artikel auf AchieveWear: Nähanleitungen für die Laufstrecke, Erklär-Artikel zur Lauf-Welt und persönliche Geschichten."
 >
   <div class="container blog-index">
-    <SektionsTitel text="Der Blog" script="Anleitungen & Geschichten" />
+    <SektionsTitel text="Der Blog" zeile="Anleitungen & Geschichten" ebene="h1" />
 
     <nav class="filter" aria-label="Nach Kategorie filtern">
-      <a class="filter-pill aktiv" href={withBase('/blog')} aria-current="page">Alle</a>
+      <a class="filter-knopf aktiv" href={withBase('/blog')} aria-current="page">Alle</a>
       {
         kategorien.map((kategorie) => (
-          <a class="filter-pill" href={withBase(`/kategorie/${kategorie.slug}`)}>
+          <a class="filter-knopf" href={withBase(`/kategorie/${kategorie.slug}`)}>
             {kategorie.name}
           </a>
         ))
@@ -47,7 +48,7 @@ const kategorieVon = (slug: string) => kategorien.find((k) => k.slug === slug);
             <PostKarte
               post={post}
               kategorieName={kategorie?.name ?? post.data.category}
-              kategorieFarbe={kategorie?.color ?? 'var(--salbei)'}
+              ueberschrift="h2"
             />
           );
         })
@@ -55,5 +56,7 @@ const kategorieVon = (slug: string) => kategorien.find((k) => k.slug === slug);
     </div>
 
     <Pagination currentPage={page.currentPage} lastPage={page.lastPage} basePath="/blog" />
+
+    <UeberMichKasten />
   </div>
 </BaseLayout>

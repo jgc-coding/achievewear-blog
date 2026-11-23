@@ -205,41 +205,48 @@ collections:
         public_folder: bilder
         fields:
           - name: welcome
-            label: 'Bereich 1: Willkommen'
+            label: 'Titelbild & Willkommen'
             widget: object
             fields:
               - { name: headline, label: Überschrift, widget: string }
-              - { name: scriptLine, label: Geschwungene Zeile, widget: string }
+              - { name: scriptLine, label: 'Überschrift, zweiter Teil (kursiv)', widget: string, hint: 'z. B. „bei AchieveWear“ — erscheint kursiv hinter der Überschrift.' }
               - { name: text, label: Text, widget: text }
               - { name: buttonText, label: 'Knopf: Beschriftung', widget: string }
               - { name: buttonUrl, label: 'Knopf: Ziel', widget: string, hint: 'z. B. /ueber-mich oder /blog' }
-              - { name: image, label: Bild, widget: image }
-              - { name: imageAlt, label: 'Bild: Beschreibung (Alt-Text)', widget: string }
+              - { name: image, label: 'Großes Titelbild ganz oben', widget: image, hint: 'Am besten ein helles Querformat-Foto mit ruhiger Mitte — dort steht der Blog-Name.' }
+              - { name: imageAlt, label: 'Titelbild: Beschreibung (Alt-Text)', widget: string }
+              - { name: heroLine, label: 'Kursive Zeile im Titelbild', widget: string, required: false, hint: 'Steht unten links im Titelbild, z. B. „In deinem Tempo. Schritt für Schritt.“' }
           - name: about
-            label: 'Bereich 2: Über mich'
+            label: 'Über mich'
             widget: object
             fields:
               - { name: headline, label: Überschrift, widget: string }
-              - { name: scriptLine, label: Geschwungene Zeile, widget: string }
-              - { name: text, label: Text, widget: text }
+              - { name: scriptLine, label: Kursive Zeile unter der Überschrift, widget: string }
+              - { name: text, label: Text, widget: text, hint: 'Erscheint auf der Startseite und im Kasten am Ende jedes Artikels.' }
               - { name: buttonText, label: 'Knopf: Beschriftung', widget: string }
               - { name: buttonUrl, label: 'Knopf: Ziel', widget: string }
               - { name: image, label: Bild, widget: image }
               - { name: imageAlt, label: 'Bild: Beschreibung (Alt-Text)', widget: string }
-          - name: blogSection
-            label: 'Bereich 3: Aus dem Blog'
+          - name: themen
+            label: 'Themen (die drei runden Bilder)'
             widget: object
             fields:
               - { name: headline, label: Überschrift, widget: string }
-              - { name: scriptLine, label: Geschwungene Zeile, widget: string }
+              - { name: scriptLine, label: Kursive Zeile, widget: string }
+          - name: blogSection
+            label: 'Aus dem Blog (Artikel-Karten)'
+            widget: object
+            fields:
+              - { name: headline, label: Überschrift, widget: string }
+              - { name: scriptLine, label: Kursive Zeile, widget: string }
           - name: quote
-            label: 'Bereich 4: Zitat'
+            label: 'Zitat'
             widget: object
             fields:
               - { name: text, label: Zitat-Text, widget: text }
               - { name: attribution, label: 'Von wem?', widget: string }
           - name: newsletter
-            label: 'Bereich 5: Newsletter'
+            label: 'Newsletter'
             widget: object
             fields:
               - { name: show, label: Bereich anzeigen, widget: boolean }
@@ -254,39 +261,42 @@ collections:
         fields:
           # Muster gespiegelt in hexFarbe() in src/content.config.ts — nur gemeinsam ändern.
           - name: creme
-            label: Creme (Seiten-Hintergrund)
+            label: Creme (Farbbänder: Themen, Über mich)
             widget: color
             pattern: ['^#([0-9a-fA-F]{3}|[0-9a-fA-F]{6}|[0-9a-fA-F]{8})$', 'Bitte eine Farbe über den Farbwähler wählen (Format #rrggbb).']
           - name: rosaZart
-            label: Rosa zart (Willkommen & Zitat)
+            label: Rosa zart (Hinweis-Kästen im Artikel)
             widget: color
             pattern: ['^#([0-9a-fA-F]{3}|[0-9a-fA-F]{6}|[0-9a-fA-F]{8})$', 'Bitte eine Farbe über den Farbwähler wählen (Format #rrggbb).']
           - name: mint
-            label: Mint (Über mich & Newsletter)
+            label: Mint (Newsletter-Band)
             widget: color
             pattern: ['^#([0-9a-fA-F]{3}|[0-9a-fA-F]{6}|[0-9a-fA-F]{8})$', 'Bitte eine Farbe über den Farbwähler wählen (Format #rrggbb).']
           - name: salbei
-            label: Salbei (Knöpfe)
+            label: Salbei (Logo-Schriftzug „wear“, Linien)
             widget: color
             pattern: ['^#([0-9a-fA-F]{3}|[0-9a-fA-F]{6}|[0-9a-fA-F]{8})$', 'Bitte eine Farbe über den Farbwähler wählen (Format #rrggbb).']
           - name: anthrazit
-            label: Anthrazit (Textfarbe)
+            label: Anthrazit (Text, Knöpfe, Datums-Plakette)
             widget: color
             pattern: ['^#([0-9a-fA-F]{3}|[0-9a-fA-F]{6}|[0-9a-fA-F]{8})$', 'Bitte eine Farbe über den Farbwähler wählen (Format #rrggbb).']
           - name: salbeiTief
-            label: Salbei tief (Überschriften)
+            label: Salbei tief (Abschnitts-Überschriften & Links)
             widget: color
+            hint: 'Dunkler als Salbei, damit Schrift gut lesbar bleibt.'
             pattern: ['^#([0-9a-fA-F]{3}|[0-9a-fA-F]{6}|[0-9a-fA-F]{8})$', 'Bitte eine Farbe über den Farbwähler wählen (Format #rrggbb).']
-          - name: altrose
-            label: Altrosé (Rahmen & Linien)
+          - name: volt
+            label: Volt (Akzent NUR auf dunklem Grund)
             widget: color
+            hint: 'Schrift auf dunklen Knöpfen und der Datums-Plakette. Auf hellem Grund nie verwenden — dort ist sie nicht lesbar.'
             pattern: ['^#([0-9a-fA-F]{3}|[0-9a-fA-F]{6}|[0-9a-fA-F]{8})$', 'Bitte eine Farbe über den Farbwähler wählen (Format #rrggbb).']
-          - name: altroseDunkel
-            label: Altrosé dunkel (geschwungene Schrift)
+          - name: voltTief
+            label: Volt tief (Akzent auf hellem Grund)
             widget: color
+            hint: 'Nur für kurze Linien und Unterstreichungen, nie als Schriftfarbe.'
             pattern: ['^#([0-9a-fA-F]{3}|[0-9a-fA-F]{6}|[0-9a-fA-F]{8})$', 'Bitte eine Farbe über den Farbwähler wählen (Format #rrggbb).']
           - name: weiss
-            label: Weiß (Bilderrahmen)
+            label: Weiß (Seiten-Hintergrund & Karten)
             widget: color
             pattern: ['^#([0-9a-fA-F]{3}|[0-9a-fA-F]{6}|[0-9a-fA-F]{8})$', 'Bitte eine Farbe über den Farbwähler wählen (Format #rrggbb).']
 
@@ -317,6 +327,7 @@ collections:
               - name: color
                 label: Farbe
                 widget: color
+                hint: 'Hintergrund des runden Themenbilds, solange das Foto lädt. Am besten ein heller Ton (Creme, Rosa zart, Mint).'
                 pattern: ['^#([0-9a-fA-F]{3}|[0-9a-fA-F]{6}|[0-9a-fA-F]{8})$', 'Bitte eine Farbe über den Farbwähler wählen (Format #rrggbb).']
-              - { name: image, label: Bild, widget: image }
+              - { name: image, label: Bild, widget: image, hint: 'Wird rund zugeschnitten — das Motiv sollte in der Mitte liegen. Am besten ein quadratisches Foto.' }
               - { name: imageAlt, label: 'Bild: Beschreibung (Alt-Text)', widget: string }

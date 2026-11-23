@@ -1,0 +1,4 @@
+# Schnellpruefung fuer das Done-Gate (siehe C:\Projekte\Claude-Skills\hooks\donecheck.ps1)
+# Typpruefung (Astro/TypeScript) und Unit-Tests - beide unter 20 Sekunden.
+npm run check
+npm test

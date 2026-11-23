@@ -13,6 +13,30 @@ export function formatDatum(datum: Date): string {
   return datumsFormat.format(datum);
 }
 
+// Kurze Monatsnamen für die runde Datums-Plakette auf den Artikel-Karten.
+// Bewusst als eigene Liste statt Intl: Intl liefert je nach Node-/ICU-Version
+// "Apr." oder "Apr" (lokal nachgewiesen) — die Plakette soll überall gleich aussehen.
+const MONATE_KURZ = [
+  'Jan.',
+  'Feb.',
+  'März',
+  'Apr.',
+  'Mai',
+  'Juni',
+  'Juli',
+  'Aug.',
+  'Sept.',
+  'Okt.',
+  'Nov.',
+  'Dez.',
+] as const;
+
+/** Tag und kurzer Monat für die Datums-Plakette: 12. April → { tag: '12', monat: 'Apr.' } */
+export function datumPlakette(datum: Date): { tag: string; monat: string } {
+  // UTC-Getter — gleicher Grund wie bei formatDatum (kein Off-by-one).
+  return { tag: String(datum.getUTCDate()), monat: MONATE_KURZ[datum.getUTCMonth()] };
+}
+
 /** Maschinenlesbares Datum für <time datetime="..."> (JJJJ-MM-TT). */
 export function isoDatum(datum: Date): string {
   return datum.toISOString().slice(0, 10);

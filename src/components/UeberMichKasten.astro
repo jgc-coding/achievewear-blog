@@ -1,0 +1,57 @@
+---
+// Kleiner "Über mich"-Kasten am Ende der Blog-Übersicht und jedes Artikels
+// (wie der "Hi ♥"-Kasten der Vorlage). Inhalt kommt aus dem Bereich
+// "Über mich" der Startseiten-Einstellungen — eine Quelle, keine Kopie.
+import { Image } from 'astro:assets';
+import { getStartseite } from '../lib/settings';
+import { linkUrl } from '../lib/url';
+
+const { about } = await getStartseite();
+---
+
+<aside class="ueber-kasten" aria-label={about.headline}>
+  <div class="ueber-kasten__bild">
+    <Image src={about.image} alt={about.imageAlt} widths={[300, 600]} sizes="(max-width: 620px) 92vw, 260px" />
+  </div>
+  <div class="ueber-kasten__text">
+    <p class="kicker">{about.headline}</p>
+    <p class="kursiv-zeile">{about.scriptLine}</p>
+    <span class="mini-linie" aria-hidden="true"></span>
+    <p class="ueber-kasten__copy">{about.text}</p>
+    <a class="lesen-link" href={linkUrl(about.buttonUrl)}>{about.buttonText}</a>
+  </div>
+</aside>
+
+<style>
+  .ueber-kasten {
+    display: grid;
+    grid-template-columns: minmax(0, 260px) minmax(0, 1fr);
+    gap: clamp(22px, 4vw, 44px);
+    align-items: center;
+    background: var(--creme);
+    padding: clamp(20px, 4vw, 40px);
+    margin-top: var(--abstand-sektion);
+  }
+
+  .ueber-kasten__bild :global(img) {
+    width: 100%;
+    aspect-ratio: 1;
+    object-fit: cover;
+  }
+
+  .ueber-kasten__copy {
+    font-size: 16px;
+    color: var(--anthrazit);
+  }
+
+  @media (max-width: 620px) {
+    .ueber-kasten {
+      grid-template-columns: 1fr;
+    }
+
+    /* Am Handy quer statt quadratisch — sonst füllt das Bild den ganzen Bildschirm */
+    .ueber-kasten__bild :global(img) {
+      aspect-ratio: 3 / 2;
+    }
+  }
+</style>

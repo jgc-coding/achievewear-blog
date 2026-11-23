@@ -37,12 +37,7 @@ jobs:
       # Website live geht.
       - run: npm run check
       - run: npm test
-      # Baut die echte Website nach dist/ UND die Design-Varianten nach
-      # dist/varianten/v1|v2|v3/. Die echte Website entsteht dabei unverändert
-      # aus demselben Befehl wie vorher.
-      # Ist die Design-Entscheidung gefallen: hier wieder auf "npm run build"
-      # umstellen und die Varianten-Dateien entfernen (siehe docs/design-varianten.md).
-      - run: npm run build:varianten
+      - run: npm run build
       - uses: actions/upload-pages-artifact@v5
         with:
           path: dist

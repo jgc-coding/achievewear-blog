@@ -72,9 +72,11 @@ Unter **„Einstellungen"** gibt es vier Bereiche:
 | Bereich | Was du dort änderst |
 |---|---|
 | **Website** | Blog-Name, Logo-Wörter, Menüpunkte, Fußzeile, Pinterest-Link, **Newsletter-Anmeldelink**, deine Signatur-Zeile — und den Schalter „Vor Suchmaschinen verstecken" |
-| **Startseite** | Alle Texte, Bilder und Knöpfe der Startseiten-Bereiche + das Zitat |
-| **Farben** | Die komplette Farbpalette der Website — mit Farbwählern. Trau dich, aber ändere lieber eine Farbe nach der anderen 😉 |
-| **Kategorien** | Name, Beschreibung, Farbe und Bild deiner drei Säulen (den „technischen Namen" bitte nie ändern) |
+| **Startseite** | Das große Titelbild ganz oben samt kursiver Zeile, alle Texte und Knöpfe der Startseiten-Bereiche + das Zitat. Der Bereich „Neu im Blog" füllt sich von selbst mit deinem neuesten Artikel. |
+| **Farben** | Deine CI-Farbpalette mit Farbwählern. Trau dich, aber ändere lieber eine Farbe nach der anderen 😉 Volt bitte nur für dunkle Flächen, Volt tief nur für Linien — die Hinweise unter jedem Farbfeld sagen, wo die Farbe auftaucht. |
+| **Kategorien** | Name, Beschreibung, Farbe und Bild deiner drei Säulen (den „technischen Namen" bitte nie ändern). Die Bilder erscheinen auf der Startseite **rund** — nimm am besten quadratische Fotos mit dem Motiv in der Mitte. |
+
+> **Bilder:** Die Fotos auf der Website sind vorerst Platzhalter. Ersetze sie gern nach und nach durch deine eigenen — das Titelbild am besten als helles Querformat mit ruhiger Mitte, denn dort steht der Blog-Name.
 
 > **„Vor Suchmaschinen verstecken" bleibt AN bis zum Launch!** Ausschalten machst du gemeinsam mit Gabriel zur Launch-Woche — dann wird die Seite bei Google sichtbar.
 
